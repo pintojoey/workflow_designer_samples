@@ -30,7 +30,7 @@ public class ArithmeticBlock {
     private String operation;
 
     @BlockExecute
-    public Table process() throws IOException {
+    public File process() throws IOException {
         switch (operation){
             case "add":
                 op3=op1+op2;
@@ -41,29 +41,13 @@ public class ArithmeticBlock {
             case "multiply":
                 op3=op1*op2;
                 break;
+            case "divide":
+                op3=op1/op2;
+                break;
         }
-        //File file = new File("results.txt");
-        //ileUtils.writeStringToFile(file,String.valueOf(op3),Charset.defaultCharset());
-        Table table=new Table();
-        ArrayList<String>rowHeaders=new ArrayList<>();
-        rowHeaders.add("1");
-        rowHeaders.add("2");
-        ArrayList<String>colHeaders=new ArrayList<>();
-        colHeaders.add("ColA");
-        colHeaders.add("ColB");
-        ArrayList<ArrayList<String>>data=new ArrayList<>();
-        ArrayList<String>row1=new ArrayList<>();
-        row1.add(String.valueOf(op3));
-        row1.add(String.valueOf(op3));
-        data.add(row1);
-        ArrayList<String>row2=new ArrayList<>();
-        row2.add(String.valueOf(op3));
-        row2.add(String.valueOf(op3));
-        data.add(row2);
-        table.setColumnHeaders(colHeaders);
-        table.setRowHeaders(rowHeaders);
-        table.setRows(data);
-        return table;
+        File outputFile = new File("demo.txt");
+        FileUtils.writeStringToFile(outputFile,String.valueOf(op3),Charset.defaultCharset());
+        return outputFile;
     }
 
     public static int getOp3() {

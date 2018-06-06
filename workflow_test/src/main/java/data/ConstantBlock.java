@@ -3,7 +3,7 @@ package data;
 import cz.zcu.kiv.WorkflowDesigner.Annotations.*;
 
 import static cz.zcu.kiv.WorkflowDesigner.Type.NUMBER;
-import static cz.zcu.kiv.WorkflowDesigner.WorkflowCardinality.ONE_TO_ONE;
+import static cz.zcu.kiv.WorkflowDesigner.WorkflowCardinality.ONE_TO_MANY;
 
 @BlockType(type ="CONSTANT", family = "MATH", runAsJar = true)
 public class ConstantBlock {
@@ -12,7 +12,7 @@ public class ConstantBlock {
     @BlockProperty(name = "Value", type = NUMBER, defaultValue = "0")
     private int val=7;
 
-    @BlockOutput(name = "Operand", type = NUMBER, cardinality = ONE_TO_ONE)
+    @BlockOutput(name = "Operand", type = NUMBER, cardinality = ONE_TO_MANY)
     private int op=0;
 
     @BlockExecute
