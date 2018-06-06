@@ -29,8 +29,11 @@ public class ArithmeticBlock {
     @BlockProperty(name ="Operation", type = STRING ,defaultValue = "add")
     private String operation;
 
+    @BlockProperty(name ="OutputType", type = STRING ,defaultValue = "String")
+    private String outputType;
+
     @BlockExecute
-    public File process() throws IOException {
+    public Object process() throws IOException {
         switch (operation){
             case "add":
                 op3=op1+op2;
@@ -45,9 +48,18 @@ public class ArithmeticBlock {
                 op3=op1/op2;
                 break;
         }
-        File outputFile = new File("demo.txt");
-        FileUtils.writeStringToFile(outputFile,String.valueOf(op3),Charset.defaultCharset());
-        return outputFile;
+        switch (outputType.toLowerCase()){
+            case "string":
+                return String.valueOf(op3);
+            case "file":
+                File outputFile = new File("demo.txt");
+                FileUtils.writeStringToFile(outputFile,String.valueOf(op3),Charset.defaultCharset());
+                return outputFile;
+            default:
+                return String.valueOf(op3);
+        }
+
+
     }
 
     public static int getOp3() {
