@@ -1,4 +1,4 @@
-package MathUtils;
+package cz.zcu.kiv.commons.MathUtils;
 
 import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockExecute;
 import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockOutput;
@@ -8,7 +8,7 @@ import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockType;
 import static cz.zcu.kiv.WorkflowDesigner.Type.NUMBER;
 import static cz.zcu.kiv.WorkflowDesigner.WorkflowCardinality.ONE_TO_ONE;
 
-@BlockType(type ="CONSTANT", family = "MATH")
+@BlockType(type ="Constant", family = "MATH")
 public class Constant {
 
 

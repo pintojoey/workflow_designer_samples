@@ -1,4 +1,4 @@
-package MathUtils;
+package cz.zcu.kiv.commons.MathUtils;
 
 
 import cz.zcu.kiv.WorkflowDesigner.Annotations.*;
@@ -7,7 +7,7 @@ import static cz.zcu.kiv.WorkflowDesigner.Type.STRING;
 import static cz.zcu.kiv.WorkflowDesigner.WorkflowCardinality.ONE_TO_MANY;
 import static cz.zcu.kiv.WorkflowDesigner.WorkflowCardinality.ONE_TO_ONE;
 
-@BlockType(type ="ARITHMETIC", family = "MATH")
+@BlockType(type ="Arithmetic", family = "MATH")
 public class Arithmetic {
 
     @BlockInput(name = "Operand1", type = NUMBER, cardinality = ONE_TO_ONE)

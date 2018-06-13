@@ -20,3 +20,5 @@ EEG_DataAnalysisPackage/target/
 EEG_DataAnalysisPackage/Epochs\.csv
 
 workflow_designer_commons/\.idea/
+
+workflow_designer_commons/target/
