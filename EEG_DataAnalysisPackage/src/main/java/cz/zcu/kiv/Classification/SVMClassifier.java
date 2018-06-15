@@ -4,9 +4,8 @@ import cz.zcu.kiv.FeatureExtraction.IFeatureExtraction;
 import cz.zcu.kiv.Utils.ClassificationStatistics;
 import cz.zcu.kiv.Utils.SparkInitializer;
 import cz.zcu.kiv.WorkflowDesigner.Annotations.*;
-import cz.zcu.kiv.WorkflowDesigner.BlockData;
+import cz.zcu.kiv.WorkflowDesigner.Visualizations.Table;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.api.java.JavaPairRDD;
@@ -20,6 +19,9 @@ import org.apache.spark.mllib.regression.LabeledPoint;
 import scala.Tuple2;
 
 import java.io.*;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -64,7 +66,7 @@ public class SVMClassifier implements IClassifier,Serializable {
     @BlockInput( name = FEATURE_EXTRACTOR_OUTPUT, type = FEATURE_EXTRACTOR , cardinality = ONE_TO_ONE)
     private static IFeatureExtraction fe;
 
-    @BlockOutput( name =CLASSIFICATION_MODEL_OUTPUT, type = CLASSIFCATION_MODEL, cardinality = ONE_TO_MANY)
+    @BlockOutput( name =CLASSIFICATION_MODEL_OUTPUT, type = CLASSIFICATION_MODEL, cardinality = ONE_TO_MANY)
     private static SVMModel model;
 
     private HashMap<String,String> config;
@@ -93,6 +95,9 @@ public class SVMClassifier implements IClassifier,Serializable {
 
     @BlockInput(name = RAW_TARGETS_OUTPUT, type = TARGET_LIST, cardinality = ONE_TO_ONE)
     private List<Double>targets;
+
+    @BlockOutput(name = CLASSIFICATION_STATISTICS_OUTPUT, type=CLASSIFICATION_STATISTICS, cardinality = ONE_TO_MANY)
+    private ClassificationStatistics stats;
 
     private static Function<Tuple2<Double, double[]>, LabeledPoint> unPackFunction = new Function<Tuple2<Double, double[]>, LabeledPoint>() {
         @Override
@@ -188,25 +193,34 @@ public class SVMClassifier implements IClassifier,Serializable {
     }
 
     @BlockExecute
-    public File process() {
+    public Table process() {
         setFeatureExtraction(fe);
         this.config=new HashMap<>();
         config.put("config_num_iterations",String.valueOf(ITERATIONS));
         config.put("config_step_size",String.valueOf(STEP_SIZE));
         config.put("config_reg_param",String.valueOf(REG_PARAMETERS));
         config.put("config_mini_batch_fraction",String.valueOf(MINI_BATCH_FRACTION));
-
         train(epochs, targets, getFeatureExtraction());
-        try {
-            File svmFile = new File("svm.model");
-            FileOutputStream fis = new FileOutputStream(svmFile);
-            ObjectOutputStream oos = new ObjectOutputStream(fis);
-            oos.writeObject(model);
-            return svmFile;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        stats = test(epochs, targets);
+
+        Table table = new Table();
+        table.setCaption("Classification Statistics");
+        List rows=new ArrayList();
+
+        DecimalFormat df=new DecimalFormat("#0.00");
+        rows.add(Arrays.asList("No. of patterns",df.format(stats.getNumberOfPatterns())));
+        rows.add(Arrays.asList("True +ve",df.format(stats.getTruePositives())));
+        rows.add(Arrays.asList("True -ve",df.format(stats.getTrueNegatives())));
+        rows.add(Arrays.asList("False +ve",df.format(stats.getFalsePositives())));
+        rows.add(Arrays.asList("False -ve",df.format(stats.getFalseNegatives())));
+        rows.add(Arrays.asList("Calc Accuracy",df.format(stats.calcAccuracy())));
+        rows.add(Arrays.asList("MSE",df.format(stats.getMSE()/stats.getNumberOfPatterns())));
+        rows.add(Arrays.asList("Non-targets",df.format(stats.getClass1sum())));
+        rows.add(Arrays.asList("Targets",df.format(stats.getClass2sum())));
+
+        table.setRows(rows);
+
+        return table;
     }
 
 }

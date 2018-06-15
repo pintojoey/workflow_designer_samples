@@ -1,5 +1,7 @@
 package cz.zcu.kiv.Utils;
 
+import java.io.Serializable;
+
 /***********************************************************************************************************************
  *
  * This file is part of the Spark_EEG_Analysis project
@@ -24,7 +26,7 @@ package cz.zcu.kiv.Utils;
  * ClassificationStatistics, 2017/06/18 14:31 Dorian Beganovic
  *
  **********************************************************************************************************************/
-public class ClassificationStatistics {
+public class ClassificationStatistics implements Serializable {
 
     private int truePositives;
     private int trueNegatives;
@@ -93,5 +95,61 @@ public class ClassificationStatistics {
                 + "MSE: " + this.MSE / getNumberOfPatterns() + "\n"
                 + "Non-targets: " + class1sum + "\n"
                 + "Targets: " + class2sum + "\n";
+    }
+
+    public int getTruePositives() {
+        return truePositives;
+    }
+
+    public void setTruePositives(int truePositives) {
+        this.truePositives = truePositives;
+    }
+
+    public int getTrueNegatives() {
+        return trueNegatives;
+    }
+
+    public void setTrueNegatives(int trueNegatives) {
+        this.trueNegatives = trueNegatives;
+    }
+
+    public int getFalsePositives() {
+        return falsePositives;
+    }
+
+    public void setFalsePositives(int falsePositives) {
+        this.falsePositives = falsePositives;
+    }
+
+    public int getFalseNegatives() {
+        return falseNegatives;
+    }
+
+    public void setFalseNegatives(int falseNegatives) {
+        this.falseNegatives = falseNegatives;
+    }
+
+    public double getMSE() {
+        return MSE;
+    }
+
+    public void setMSE(double MSE) {
+        this.MSE = MSE;
+    }
+
+    public double getClass1sum() {
+        return class1sum;
+    }
+
+    public void setClass1sum(double class1sum) {
+        this.class1sum = class1sum;
+    }
+
+    public double getClass2sum() {
+        return class2sum;
+    }
+
+    public void setClass2sum(double class2sum) {
+        this.class2sum = class2sum;
     }
 }

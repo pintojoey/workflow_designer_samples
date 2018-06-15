@@ -82,7 +82,7 @@ public class Const {
     public static final String TEST_RESULTS_DIRECTORY = "test-results";
     public static final String TEST_OUTPUT_DIRECTORY = "test-output";
     public static final String LOCAL_TEST_DATA_DIRECTORY = "test-data";
-    public static final String REMOTE_TEST_DATA_DIRECTORY = "/data/test";
+    public static final String REMOTE_TEST_DATA_DIRECTORY = "/data/demo";
     public static final String TRAINING_FILE = "/infoTrain.txt";
     public static final String TESTING_FILE = "/info.txt";
    /* public static final String[] DIRECTORIES = {"data/numbers/Horazdovice", 

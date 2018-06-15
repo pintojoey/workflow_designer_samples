@@ -20,11 +20,14 @@ public class EEGTest {
         FileSystem fs = FileSystem.get(URI.create(Const.HDFS_URI), Const.HDFS_CONF);
         Path local_file = new Path(LOCAL_TEST_DATA_DIRECTORY);
         Path remote_path = new Path(REMOTE_TEST_DATA_DIRECTORY);
+        if(fs.exists(remote_path))
+            fs.delete(remote_path,true);
         fs.copyFromLocalFile(local_file, remote_path);
         fs.close();
     }
 
     public static void unintializeHDFSTest() throws IOException {
+        System.setProperty(Const.HADOOP_USER_NAME_KEY,HADOOP_USER_NAME);
         FileSystem fs = FileSystem.get(URI.create(Const.HDFS_URI), Const.HDFS_CONF);
         Path remote_path = new Path(REMOTE_TEST_DATA_DIRECTORY);
         fs.delete(remote_path,true);
