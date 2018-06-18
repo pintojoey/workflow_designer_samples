@@ -1,4 +1,4 @@
-package cz.zcu.kiv.commons.MathUtils;
+package cz.zcu.kiv.commons.GraphUtils;
 
 import cz.zcu.kiv.WorkflowDesigner.Annotations.*;
 import cz.zcu.kiv.WorkflowDesigner.Visualizations.PlotlyGraphs.*;

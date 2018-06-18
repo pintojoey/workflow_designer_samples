@@ -1,6 +1,6 @@
 package cz.zcu.kiv.commons;
 
-import cz.zcu.kiv.commons.MathUtils.LineEquation;
+import cz.zcu.kiv.commons.GraphUtils.LineEquation;
 ;import java.io.IOException;
 
 public class Main {
