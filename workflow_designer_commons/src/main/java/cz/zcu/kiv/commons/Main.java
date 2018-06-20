@@ -6,7 +6,5 @@ import cz.zcu.kiv.commons.GraphUtils.LineEquation;
 public class Main {
     public static void main(String[]args) throws IOException {
         System.out.println("SUCCESS");
-        LineEquation eq = new LineEquation();
-        System.out.println(eq.process().getLayout());
     }
 }

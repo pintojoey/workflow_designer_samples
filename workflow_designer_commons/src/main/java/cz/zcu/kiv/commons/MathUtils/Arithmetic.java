@@ -4,6 +4,7 @@ package cz.zcu.kiv.commons.MathUtils;
 import cz.zcu.kiv.WorkflowDesigner.Annotations.*;
 import static cz.zcu.kiv.WorkflowDesigner.Type.NUMBER;
 import static cz.zcu.kiv.WorkflowDesigner.Type.STRING;
+import static cz.zcu.kiv.WorkflowDesigner.WorkflowCardinality.MANY_TO_MANY;
 import static cz.zcu.kiv.WorkflowDesigner.WorkflowCardinality.ONE_TO_MANY;
 import static cz.zcu.kiv.WorkflowDesigner.WorkflowCardinality.ONE_TO_ONE;
 
@@ -16,7 +17,7 @@ public class Arithmetic {
     @BlockInput(name = "Operand2", type = NUMBER, cardinality = ONE_TO_ONE)
     private int op2=0;
 
-    @BlockOutput(name = "Operand3", type = NUMBER, cardinality = ONE_TO_MANY)
+    @BlockOutput(name = "Operand3", type = NUMBER, cardinality = MANY_TO_MANY)
     private static int op3=0;
 
     @BlockProperty(name ="Operation", type = STRING ,defaultValue = "add")

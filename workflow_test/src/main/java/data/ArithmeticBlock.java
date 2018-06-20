@@ -1,13 +1,11 @@
 package data;
 
 import cz.zcu.kiv.WorkflowDesigner.Annotations.*;
-import cz.zcu.kiv.WorkflowDesigner.Table;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 
 import static cz.zcu.kiv.WorkflowDesigner.Type.NUMBER;
 import static cz.zcu.kiv.WorkflowDesigner.Type.STRING;
