@@ -5,7 +5,6 @@ import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockInput;
 import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockOutput;
 import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockType;
 import cz.zcu.kiv.WorkflowDesigner.Type;
-import cz.zcu.kiv.WorkflowDesigner.WorkflowCardinality;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -16,10 +15,10 @@ import java.util.Date;
 @BlockType(type="StringToFile",family = "IOUtils")
 public class StringToFile {
 
-    @BlockInput(name="String", type=Type.STRING, cardinality = WorkflowCardinality.ONE_TO_ONE)
+    @BlockInput(name="String", type=Type.STRING)
     private String stringInput;
 
-    @BlockOutput(name = "File", type = "FILE", cardinality = WorkflowCardinality.ONE_TO_MANY)
+    @BlockOutput(name = "File", type = "FILE")
     private File fileOutput;
 
     @BlockExecute

@@ -12,7 +12,7 @@ import static cz.zcu.kiv.WorkflowDesigner.WorkflowCardinality.ONE_TO_MANY;
 @BlockType(type ="SUMMATION", family = "MATH")
 public class SummationBlock {
 
-    @BlockInput(name = "Operand1", type = NUMBER_ARRAY, cardinality = ONE_TO_MANY)
+    @BlockInput(name = "Operand1", type = NUMBER_ARRAY)
     private List<Integer> op;
 
     @BlockExecute

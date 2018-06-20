@@ -2,7 +2,6 @@ package cz.zcu.kiv.commons.IOUtils;
 
 import cz.zcu.kiv.WorkflowDesigner.Annotations.*;
 import cz.zcu.kiv.WorkflowDesigner.Type;
-import cz.zcu.kiv.WorkflowDesigner.WorkflowCardinality;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -14,7 +13,7 @@ public class FileToString {
     @BlockProperty(name = "File", type = "file" ,defaultValue = "")
     private File fileInput;
 
-    @BlockOutput(name="String", type=Type.STRING, cardinality = WorkflowCardinality.ONE_TO_MANY)
+    @BlockOutput(name="String", type=Type.STRING)
     private String stringOutput;
 
     @BlockExecute

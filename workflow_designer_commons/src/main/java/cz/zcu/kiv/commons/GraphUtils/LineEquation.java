@@ -18,13 +18,13 @@ import static cz.zcu.kiv.WorkflowDesigner.WorkflowCardinality.ONE_TO_ONE;
 @BlockType(type ="LineEquation", family = "MATH", runAsJar = true)
 public class LineEquation {
 
-    @BlockInput(name = "IntRangeStart", type = NUMBER, cardinality = ONE_TO_ONE)
+    @BlockInput(name = "IntRangeStart", type = NUMBER)
     public int op1=0;
 
-    @BlockInput(name = "IntRangeEnd", type = NUMBER, cardinality = ONE_TO_ONE)
+    @BlockInput(name = "IntRangeEnd", type = NUMBER)
     public int op2=0;
 
-    @BlockInput(name = "IntRangeIncrement", type = NUMBER, cardinality = ONE_TO_ONE)
+    @BlockInput(name = "IntRangeIncrement", type = NUMBER)
     public int op3=0;
 
     @BlockProperty(name ="Expression", type = STRING ,defaultValue = "x")
