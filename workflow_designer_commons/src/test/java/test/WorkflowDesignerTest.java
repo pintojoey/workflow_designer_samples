@@ -9,6 +9,6 @@ public class WorkflowDesignerTest {
     @Test
     public void testBlock() throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         JSONArray blocksArray=new Workflow(ClassLoader.getSystemClassLoader(),":cz.zcu.kiv.commons",null,"").initializeBlocks();
-        assert blocksArray.length()==9;
+        assert blocksArray.length()==13;
     }
 }

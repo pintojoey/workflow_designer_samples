@@ -12,11 +12,6 @@
         <plugin>
             <artifactId>maven-assembly-plugin</artifactId>
             <configuration>
-                <archive>
-                    <manifest>
-                        <mainClass>data.Main</mainClass>
-                    </manifest>
-                </archive>
                 <descriptorRefs>
                     <descriptorRef>jar-with-dependencies</descriptorRef>
                 </descriptorRefs>
@@ -45,7 +40,7 @@
         <dependency>
             <groupId>cz.zcu.kiv</groupId>
             <artifactId>workflow_designer</artifactId>
-            <version>1.8</version>
+            <version>1.9</version>
         </dependency>
     </dependencies>
 </project>
