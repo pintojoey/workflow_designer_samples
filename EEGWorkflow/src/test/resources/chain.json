@@ -1,0 +1,160 @@
+{
+    "edges": [
+        {
+            "id": 1,
+            "block1": 1,
+            "connector1": [
+                "EEGData",
+                "output"
+            ],
+            "block2": 2,
+            "connector2": [
+                "EEGData",
+                "input"
+            ]
+        },
+        {
+            "id": 6,
+            "block1": 8,
+            "connector1": [
+                "EEGData",
+                "output"
+            ],
+            "block2": 7,
+            "connector2": [
+                "EEGData",
+                "input"
+            ]
+        },
+        {
+            "id": 4,
+            "block1": 9,
+            "connector1": [
+                "marker",
+                "output"
+            ],
+            "block2": 8,
+            "connector2": [
+                "Markers",
+                "input",
+                0
+            ]
+        },
+        {
+            "id": 7,
+            "block1": 2,
+            "connector1": [
+                "EEGData",
+                "output"
+            ],
+            "block2": 4,
+            "connector2": [
+                "EEGData",
+                "input"
+            ]
+        },
+        {
+            "id": 8,
+            "block1": 4,
+            "connector1": [
+                "Epochs",
+                "output"
+            ],
+            "block2": 3,
+            "connector2": [
+                "EEGData",
+                "input"
+            ]
+        },
+        {
+            "id": 9,
+            "block1": 3,
+            "connector1": [
+                "EEGData",
+                "output"
+            ],
+            "block2": 8,
+            "connector2": [
+                "EEGData",
+                "input"
+            ]
+        }
+    ],
+    "blocks": [
+        {
+            "id": 1,
+            "x": -448,
+            "y": -181,
+            "type": "OffLineDataProvider",
+            "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
+            "values": {
+                "EEG File": [
+                    "P300/LED_28_06_2012_104.eeg"
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "x": -279,
+            "y": -179,
+            "type": "ChannelSelection",
+            "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
+            "values": {
+                "channels": [
+                    "Cz",
+                    "Pz",
+                    "Fz"
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "x": 85.49606862044317,
+            "y": -190.26590421729804,
+            "type": "BaselineCorrection",
+            "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
+            "values": {
+                "EndTime": "100",
+                "StartTime": "0"
+            }
+        },
+        {
+            "id": 4,
+            "x": -93.57183702644744,
+            "y": -194.13938527519656,
+            "type": "EpochExtraction",
+            "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
+            "values": {
+                "PreStimulus onset": "100",
+                "PostStimulus onset": "1000"
+            }
+        },
+        {
+            "id": 7,
+            "x": 358,
+            "y": -84,
+            "type": "EEGPlot",
+            "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
+            "values": {}
+        },
+        {
+            "id": 8,
+            "x": 318.01680009108725,
+            "y": -178.24195036533033,
+            "type": "AveragingBlock",
+            "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
+            "values": {}
+        },
+        {
+            "id": 9,
+            "x": 120.07416146776018,
+            "y": -90.72761002116204,
+            "type": "EEGMarkerBlock",
+            "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
+            "values": {
+                "Name": "S  2",
+                "Offset": "-1"
+            }
+        }
+    ]
+}

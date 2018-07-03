@@ -1,0 +1,20 @@
+package cz.zcu.kiv.eeg.basil.workflow;
+
+
+import java.util.List;
+
+public class EEGDataPackageList {
+    List<EEGDataPackage> eegDataPackage;
+
+    public EEGDataPackageList(List<EEGDataPackage> eegDataPackage) {
+        this.eegDataPackage = eegDataPackage;
+    }
+
+    public List<EEGDataPackage> getEegDataPackage() {
+        return eegDataPackage;
+    }
+
+    public void setEegDataPackage(List<EEGDataPackage> eegDataPackage) {
+        this.eegDataPackage = eegDataPackage;
+    }
+}

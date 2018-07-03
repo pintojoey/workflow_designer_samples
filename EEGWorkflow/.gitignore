@@ -1,0 +1,13 @@
+data/last_trained.txt
+data/best_class_2_650.txt
+/bin/
+.project
+.classpath
+.settings/
+log/
+/target/
+.idea
+out/
+Epochs.csv.orig
+/src/test/resources/data/P300/chart.png
+test_result
