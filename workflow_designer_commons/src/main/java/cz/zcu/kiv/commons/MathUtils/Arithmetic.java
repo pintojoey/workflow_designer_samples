@@ -5,7 +5,7 @@ import cz.zcu.kiv.WorkflowDesigner.Annotations.*;
 import static cz.zcu.kiv.WorkflowDesigner.Type.NUMBER;
 import static cz.zcu.kiv.WorkflowDesigner.Type.STRING;
 
-@BlockType(type ="Arithmetic", family = "MATH")
+@BlockType(type ="Arithmetic", family = "MATH", description = "Performs + - / * on two operands")
 public class Arithmetic {
 
     @BlockInput(name = "Operand1", type = NUMBER)
@@ -17,7 +17,7 @@ public class Arithmetic {
     @BlockOutput(name = "Operand3", type = NUMBER)
     private static int op3=0;
 
-    @BlockProperty(name ="Operation", type = STRING ,defaultValue = "add")
+    @BlockProperty(name ="Operation", type = STRING ,defaultValue = "add" ,description = "String that can be one of add/subtract/multiply/divide")
     private String operation;
 
     @BlockExecute

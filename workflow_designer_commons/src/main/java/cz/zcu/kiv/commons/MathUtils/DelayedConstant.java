@@ -7,14 +7,14 @@ import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockType;
 
 import static cz.zcu.kiv.WorkflowDesigner.Type.NUMBER;
 
-@BlockType(type ="DelayedConstant", family = "MATH")
+@BlockType(type ="DelayedConstant", family = "MATH", description = "Provides a constant after a time delay")
 public class DelayedConstant {
 
 
     @BlockProperty(name = "Value", type = NUMBER, defaultValue = "0")
     private int val=7;
 
-    @BlockProperty(name = "Delay", type = NUMBER, defaultValue = "0")
+    @BlockProperty(name = "Delay", type = NUMBER, defaultValue = "0", description = "Time Delay in Milliseconds")
     private int delay=0;
 
     @BlockOutput(name = "Operand", type = NUMBER)
