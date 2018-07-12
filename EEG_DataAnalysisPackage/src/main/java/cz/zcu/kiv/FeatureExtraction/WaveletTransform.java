@@ -274,7 +274,7 @@ public class WaveletTransform  implements IFeatureExtraction, Serializable {
     public void process() {
     }
 
-    @BlockOutput(name = FEATURE_EXTRACTOR_OUTPUT , type = FEATURE_EXTRACTOR , cardinality = ONE_TO_MANY)
+    @BlockOutput(name = FEATURE_EXTRACTOR_OUTPUT , type = FEATURE_EXTRACTOR )
     private IFeatureExtraction iFeatureExtraction = this;
 
 

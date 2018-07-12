@@ -63,10 +63,10 @@ public class SVMClassifier implements IClassifier,Serializable {
 
     private static Log logger = LogFactory.getLog(SVMClassifier.class);
 
-    @BlockInput( name = FEATURE_EXTRACTOR_OUTPUT, type = FEATURE_EXTRACTOR , cardinality = ONE_TO_ONE)
+    @BlockInput( name = FEATURE_EXTRACTOR_OUTPUT, type = FEATURE_EXTRACTOR)
     private static IFeatureExtraction fe;
 
-    @BlockOutput( name =CLASSIFICATION_MODEL_OUTPUT, type = CLASSIFICATION_MODEL, cardinality = ONE_TO_MANY)
+    @BlockOutput( name =CLASSIFICATION_MODEL_OUTPUT, type = CLASSIFICATION_MODEL)
     private static SVMModel model;
 
     private HashMap<String,String> config;
@@ -90,13 +90,13 @@ public class SVMClassifier implements IClassifier,Serializable {
         }
     };
 
-    @BlockInput(name = RAW_EPOCHS_OUTPUT, type = EPOCH_LIST, cardinality = ONE_TO_ONE)
+    @BlockInput(name = RAW_EPOCHS_OUTPUT, type = EPOCH_LIST)
     private List<double[][]>epochs;
 
-    @BlockInput(name = RAW_TARGETS_OUTPUT, type = TARGET_LIST, cardinality = ONE_TO_ONE)
+    @BlockInput(name = RAW_TARGETS_OUTPUT, type = TARGET_LIST)
     private List<Double>targets;
 
-    @BlockOutput(name = CLASSIFICATION_STATISTICS_OUTPUT, type=CLASSIFICATION_STATISTICS, cardinality = ONE_TO_MANY)
+    @BlockOutput(name = CLASSIFICATION_STATISTICS_OUTPUT, type=CLASSIFICATION_STATISTICS)
     private ClassificationStatistics stats;
 
     private static Function<Tuple2<Double, double[]>, LabeledPoint> unPackFunction = new Function<Tuple2<Double, double[]>, LabeledPoint>() {

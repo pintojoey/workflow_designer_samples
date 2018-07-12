@@ -54,8 +54,8 @@ public class WorkflowDesignerTest {
 
 
     @Test
-    public void worklflow_initializer_test() throws  NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        JSONArray blocks_array = new Workflow(ClassLoader.getSystemClassLoader(),"workflow:cz.zcu.kiv",null).initializeBlocks();
+    public void workflow_initializer_test() throws  NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        JSONArray blocks_array = new Workflow(ClassLoader.getSystemClassLoader(),"workflow:cz.zcu.kiv",null,"").initializeBlocks();
         assert blocks_array.length()==3;
     }
 
@@ -63,7 +63,7 @@ public class WorkflowDesignerTest {
     public void workflow_parse() throws Exception{
         String json = FileUtils.readFileToString(new File("workflow_designer/export.json"),Charset.defaultCharset());
         JSONObject jsonObject = new JSONObject(json);
-        Workflow workflow = new Workflow(ClassLoader.getSystemClassLoader(),"workflow:cz.zcu.kiv",null);
-        workflow.execute(jsonObject,"test-data");
+        Workflow workflow = new Workflow(ClassLoader.getSystemClassLoader(),"workflow:cz.zcu.kiv",null,"");
+        workflow.execute(jsonObject,"test-data",null);
     }
 }

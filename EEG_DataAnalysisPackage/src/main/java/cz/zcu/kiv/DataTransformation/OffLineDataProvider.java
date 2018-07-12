@@ -66,10 +66,10 @@ public class OffLineDataProvider implements Serializable {
     private Map<String, Integer> files = new LinkedHashMap<>();
     private FileSystem fs;
     //
-    @BlockOutput(name = RAW_EPOCHS_OUTPUT , type = EPOCH_LIST , cardinality = ONE_TO_MANY)
+    @BlockOutput(name = RAW_EPOCHS_OUTPUT , type = EPOCH_LIST)
     private List<double[][]> epochs = new ArrayList<>();
 
-    @BlockOutput(name = RAW_TARGETS_OUTPUT , type = TARGET_LIST , cardinality = ONE_TO_MANY)
+    @BlockOutput(name = RAW_TARGETS_OUTPUT , type = TARGET_LIST)
     private List<Double> targets = new ArrayList<>();
 
     private int numberOfTargets = 0;
