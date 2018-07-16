@@ -30,8 +30,6 @@ import static cz.zcu.kiv.WorkflowConstants.DataType.*;
 import static cz.zcu.kiv.WorkflowConstants.Field.*;
 import static cz.zcu.kiv.WorkflowDesigner.Type.NUMBER;
 import static cz.zcu.kiv.WorkflowConstants.WorkflowBlock.SVM_CLASSIFIER;
-import static cz.zcu.kiv.WorkflowDesigner.WorkflowCardinality.ONE_TO_MANY;
-import static cz.zcu.kiv.WorkflowDesigner.WorkflowCardinality.ONE_TO_ONE;
 import static cz.zcu.kiv.WorkflowConstants.WorkflowFamily.MACHINE_LEARNING;
 
 /***********************************************************************************************************************

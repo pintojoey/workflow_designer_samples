@@ -1,9 +1,9 @@
 package cz.zcu.kiv.Classification;
 
-import com.twelvemonkeys.util.LinkedSet;
 import cz.zcu.kiv.FeatureExtraction.IFeatureExtraction;
 import cz.zcu.kiv.Utils.ClassificationStatistics;
-import org.apache.commons.io.FileUtils;
+import cz.zcu.kiv.WorkflowDesigner.Annotations.*;
+import cz.zcu.kiv.WorkflowDesigner.Visualizations.Table;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.deeplearning4j.nn.api.OptimizationAlgorithm;
@@ -13,7 +13,6 @@ import org.deeplearning4j.nn.conf.Updater;
 import org.deeplearning4j.nn.conf.layers.*;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.nn.weights.WeightInit;
-import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
 import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.api.ndarray.INDArray;
@@ -23,11 +22,18 @@ import org.nd4j.linalg.lossfunctions.LossFunctions;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.util.*;
+
+import static cz.zcu.kiv.WorkflowConstants.DataField.*;
+import static cz.zcu.kiv.WorkflowConstants.DataType.*;
+import static cz.zcu.kiv.WorkflowConstants.Field.ITERATIONS_FIELD;
+import static cz.zcu.kiv.WorkflowConstants.WorkflowBlock.NEURAL_NETWORK_CLASSIFIER;
+import static cz.zcu.kiv.WorkflowConstants.WorkflowFamily.MACHINE_LEARNING;
+import static cz.zcu.kiv.WorkflowDesigner.Type.BOOLEAN;
+import static cz.zcu.kiv.WorkflowDesigner.Type.NUMBER;
+import static cz.zcu.kiv.WorkflowDesigner.Type.STRING;
 
 /***********************************************************************************************************************
  *
@@ -53,12 +59,59 @@ import java.util.Set;
  * NeuralNetworkClassifier, 2017/08/08 11:55 dbg
  *
  **********************************************************************************************************************/
-public class NeuralNetworkClassifier implements IClassifier {
+@BlockType(type = NEURAL_NETWORK_CLASSIFIER, family = MACHINE_LEARNING, runAsJar = true)
+public class NeuralNetworkClassifier implements IClassifier,Serializable {
 
     private static Log logger = LogFactory.getLog(NeuralNetworkClassifier.class);
-    public static IFeatureExtraction fe;
-    private static MultiLayerNetwork model;
+
+    @BlockInput( name = FEATURE_EXTRACTOR_OUTPUT, type = FEATURE_EXTRACTOR)
+    private static IFeatureExtraction fe;
+
+    @BlockInput(name = RAW_EPOCHS_OUTPUT, type = EPOCH_LIST)
+    private List<double[][]>epochs;
+
+    @BlockInput(name = RAW_TARGETS_OUTPUT, type = TARGET_LIST)
+    private List<Double>targets;
+
+    @BlockInput(name="Layers", type="NeuralNetworkLayerChain")
+    private NeuralNetworkLayerChain layerChain;
+
+    @BlockOutput(name = CLASSIFICATION_STATISTICS_OUTPUT, type=CLASSIFICATION_STATISTICS)
+    private ClassificationStatistics stats;
+
+    @BlockOutput( name =CLASSIFICATION_MODEL_OUTPUT, type = CLASSIFICATION_MODEL)
+    private MultiLayerNetwork model;
+
+    /**** Configuration Parameters ****/
+
     private HashMap<String,String> config;
+
+    @BlockProperty(name = "Seed", type = NUMBER , defaultValue = "1")
+    private int seed;
+
+    @BlockProperty(name = ITERATIONS_FIELD, type = NUMBER , defaultValue = "100")
+    private int iterations;
+
+    @BlockProperty(name = "Learning Rate", type = NUMBER , defaultValue = "1.0")
+    private double learningRate;
+
+    @BlockProperty(name = "Momentum", type = NUMBER , defaultValue = "1.0")
+    private double momentum;
+
+    @BlockProperty(name = "Initial Weight", type = STRING , defaultValue = "1")
+    private String initialWeight;
+
+    @BlockProperty(name = "Updater", type = STRING , defaultValue = "sgd")
+    private String updater;
+
+    @BlockProperty(name = "Optimization Algo", type = STRING , defaultValue = "line_gradient_descent")
+    private String optimizationAlgo;
+
+    @BlockProperty(name = "Pre-train", type = BOOLEAN , defaultValue = "TRUE")
+    private Boolean pretrain;
+
+    @BlockProperty(name = "Back-Propagation", type = BOOLEAN , defaultValue = "FALSE")
+    private Boolean backPropogation;
 
     @Override
     public void setFeatureExtraction(IFeatureExtraction fe) {
@@ -119,17 +172,20 @@ public class NeuralNetworkClassifier implements IClassifier {
         }
         numLayers = numLayers/4;
         for (int id = 1; id <= numLayers; id++ ){
-            builder.layer(id-1, parseLayer(id,config.get("config_layer" + id + "_layer_type")));
+            if(layerChain==null)
+                builder.layer(id-1, parseLayer(id,config.get("config_layer" + id + "_layer_type")));
+            else
+                builder.layer(id-1,layerChain.layerArraylist.get(id));
         }
         logger.info("Number of layers " + numLayers);
 
-        if(config.get("config_pretrain").equals("true")){
+        if(config.get("config_pretrain").equalsIgnoreCase("true")){
             builder.pretrain(true);
         }
         else{
             builder.pretrain(false);
         }
-        if(config.get("config_backprop").equals("true")){
+        if(config.get("config_backprop").equalsIgnoreCase("true")){
             builder.backprop(true);
         }
         else{
@@ -230,7 +286,7 @@ public class NeuralNetworkClassifier implements IClassifier {
         }
     }
 
-    private LossFunctions.LossFunction parseLossFunction(String command){
+    public static LossFunctions.LossFunction parseLossFunction(String command){
         switch (command){
             case "mse" : return LossFunctions.LossFunction.MSE;
             case "xent" : return LossFunctions.LossFunction.XENT;
@@ -241,7 +297,7 @@ public class NeuralNetworkClassifier implements IClassifier {
     }
 
 
-    private Activation parseActivation(String command){
+    public static Activation parseActivation(String command){
         switch (command){
             case "sigmoid" : return Activation.SIGMOID;
             case "softmax" : return Activation.SOFTMAX;
@@ -317,6 +373,45 @@ public class NeuralNetworkClassifier implements IClassifier {
                             .build()
                     ;
         }
+
+
+    }
+
+    @BlockExecute
+    public Table process() {
+        setFeatureExtraction(fe);
+        this.config=new HashMap<>();
+        config.put("config_seed",String.valueOf(seed));
+        config.put("config_num_iterations",String.valueOf(iterations));
+        config.put("config_learning_rate",String.valueOf(learningRate));
+        config.put("config_momentum",String.valueOf(momentum));
+        config.put("config_weight_init",String.valueOf(initialWeight));
+        config.put("config_updater",String.valueOf(updater));
+        config.put("config_optimization_algo",String.valueOf(optimizationAlgo));
+        config.put("config_pretrain",String.valueOf(pretrain));
+        config.put("config_backprop",String.valueOf(backPropogation));
+
+        train(epochs, targets, getFeatureExtraction());
+        stats = test(epochs, targets);
+
+        Table table = new Table();
+        table.setCaption("Classification Statistics");
+        List rows=new ArrayList();
+
+        DecimalFormat df=new DecimalFormat("#0.00");
+        rows.add(Arrays.asList("No. of patterns",df.format(stats.getNumberOfPatterns())));
+        rows.add(Arrays.asList("True +ve",df.format(stats.getTruePositives())));
+        rows.add(Arrays.asList("True -ve",df.format(stats.getTrueNegatives())));
+        rows.add(Arrays.asList("False +ve",df.format(stats.getFalsePositives())));
+        rows.add(Arrays.asList("False -ve",df.format(stats.getFalseNegatives())));
+        rows.add(Arrays.asList("Calc Accuracy",df.format(stats.calcAccuracy())));
+        rows.add(Arrays.asList("MSE",df.format(stats.getMSE()/stats.getNumberOfPatterns())));
+        rows.add(Arrays.asList("Non-targets",df.format(stats.getClass1sum())));
+        rows.add(Arrays.asList("Targets",df.format(stats.getClass2sum())));
+
+        table.setRows(rows);
+
+        return table;
     }
 
 }

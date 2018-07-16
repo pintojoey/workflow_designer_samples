@@ -1,0 +1,142 @@
+{
+    "edges": [
+        {
+            "id": 4,
+            "block1": 2,
+            "connector1": [
+                "RawTargetsOut",
+                "output"
+            ],
+            "block2": 4,
+            "connector2": [
+                "RawTargetsOut",
+                "input"
+            ]
+        },
+        {
+            "id": 5,
+            "block1": 2,
+            "connector1": [
+                "RawEpochsOut",
+                "output"
+            ],
+            "block2": 4,
+            "connector2": [
+                "RawEpochsOut",
+                "input"
+            ]
+        },
+        {
+            "id": 6,
+            "block1": 3,
+            "connector1": [
+                "FeatureExtractorOut",
+                "output"
+            ],
+            "block2": 4,
+            "connector2": [
+                "FeatureExtractorOut",
+                "input"
+            ]
+        },
+        {
+            "id": 7,
+            "block1": 5,
+            "connector1": [
+                "LayerChain",
+                "output"
+            ],
+            "block2": 4,
+            "connector2": [
+                "Layers",
+                "input"
+            ]
+        },
+        {
+            "id": 8,
+            "block1": 6,
+            "connector1": [
+                "LayerChain",
+                "output"
+            ],
+            "block2": 5,
+            "connector2": [
+                "LayerChain",
+                "input"
+            ]
+        }
+    ],
+    "blocks": [
+        {
+            "id": 3,
+            "x": -264.966464052136,
+            "y": 91.0206099345981,
+            "type": "Wavelet Transform",
+            "module": "spark_eeg-1.3-allinone.jar:cz.zcu.kiv",
+            "values": {
+                "Epoch Size": "512",
+                "Skip Samples": "0",
+                "Feature Size": "16",
+                "Name": "8"
+            }
+        },
+        {
+            "id": 2,
+            "x": -261.1963467991335,
+            "y": -40.92854463209102,
+            "type": "Infotxt File",
+            "module": "spark_eeg-1.3-allinone.jar:cz.zcu.kiv",
+            "values": {
+                "File location": "/data/demo/infoTrain.txt"
+            }
+        },
+        {
+            "id": 4,
+            "x": -26.99521187944356,
+            "y": -20.144359528667067,
+            "type": "Neural Network Classifier",
+            "module": "spark_eeg-1.3-allinone.jar:cz.zcu.kiv",
+            "values": {
+                "Seed": "1",
+                "Updater": "sgd",
+                "Optimization Algo": "line_gradient_descent",
+                "Learning Rate": "1.0",
+                "Initial Weight": "1",
+                "Momentum": "1.0",
+                "Iterations": "100",
+                "Back-Propagation": "FALSE",
+                "Pre-train": "TRUE"
+            }
+        },
+        {
+            "id": 5,
+            "x": -431.4394987900119,
+            "y": 78.59898713977196,
+            "type": "NeuralNetworkLayer",
+            "module": "spark_eeg-1.3-allinone.jar:cz.zcu.kiv",
+            "values": {
+                "NumberOfOutputs": "50",
+                "ActivationFunction": "sigmoid",
+                "LayerType": "output",
+                "LossFunction": "mse",
+                "NumberOfInputs": "50",
+                "DropOut": "1.0"
+            }
+        },
+        {
+            "id": 6,
+            "x": -605.0580357833792,
+            "y": 78.88766959739979,
+            "type": "NeuralNetworkLayer",
+            "module": "spark_eeg-1.3-allinone.jar:cz.zcu.kiv",
+            "values": {
+                "NumberOfOutputs": "50",
+                "ActivationFunction": "sigmoid",
+                "LayerType": "dense",
+                "LossFunction": "mse",
+                "NumberOfInputs": "50",
+                "DropOut": "1.0"
+            }
+        }
+    ]
+}

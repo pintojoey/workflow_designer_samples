@@ -30,4 +30,5 @@ public class WorkflowBlock {
     public static final String WAVELET_TRANSFORM = "Wavelet Transform";
     public static final String INFOTXT_FILE = "Infotxt File";
     public static final String SVM_CLASSIFIER = "SVM Classifier";
+    public static final String NEURAL_NETWORK_CLASSIFIER = "Neural Network Classifier";
 }

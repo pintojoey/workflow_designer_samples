@@ -49,7 +49,7 @@ public class WorkflowDesignerTest {
 
     @After
     public void unintializeHDFSTest() throws IOException {
-        EEGTest.unintializeHDFSTest();
+        //EEGTest.unintializeHDFSTest();
     }
 
 
@@ -60,8 +60,16 @@ public class WorkflowDesignerTest {
     }
 
     @Test
-    public void workflow_parse() throws Exception{
+    public void svm_workflow_test() throws Exception{
         String json = FileUtils.readFileToString(new File("workflow_designer/export.json"),Charset.defaultCharset());
+        JSONObject jsonObject = new JSONObject(json);
+        Workflow workflow = new Workflow(ClassLoader.getSystemClassLoader(),"workflow:cz.zcu.kiv",null,"");
+        workflow.execute(jsonObject,"test-data",null);
+    }
+
+    @Test
+    public void ann_workflow_test() throws Exception{
+        String json = FileUtils.readFileToString(new File("workflow_designer/ann.json"),Charset.defaultCharset());
         JSONObject jsonObject = new JSONObject(json);
         Workflow workflow = new Workflow(ClassLoader.getSystemClassLoader(),"workflow:cz.zcu.kiv",null,"");
         workflow.execute(jsonObject,"test-data",null);
