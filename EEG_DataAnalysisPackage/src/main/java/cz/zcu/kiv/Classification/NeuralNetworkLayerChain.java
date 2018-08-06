@@ -3,7 +3,9 @@ package cz.zcu.kiv.Classification;
 import cz.zcu.kiv.WorkflowDesigner.Annotations.*;
 import org.deeplearning4j.nn.conf.layers.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.sun.org.apache.xalan.internal.xsltc.compiler.Constants.STRING;
 import static cz.zcu.kiv.Classification.NeuralNetworkClassifier.parseActivation;
@@ -11,18 +13,20 @@ import static cz.zcu.kiv.Classification.NeuralNetworkClassifier.parseLossFunctio
 import static cz.zcu.kiv.WorkflowConstants.WorkflowFamily.MACHINE_LEARNING;
 import static cz.zcu.kiv.WorkflowDesigner.Type.NUMBER;
 
-@BlockType(type="NeuralNetworkLayer", family = MACHINE_LEARNING)
-public class NeuralNetworkLayerChain {
+@BlockType(type="NeuralNetworkLayer", family = MACHINE_LEARNING, runAsJar = true)
+public class NeuralNetworkLayerChain implements Serializable {
 
     @BlockInput(name ="LayerChain",type="NeuralNetworkLayerChain")
     @BlockOutput(name ="LayerChain",type="NeuralNetworkLayerChain")
-    ArrayList<Layer> layerArraylist;
+    NeuralNetworkLayerChain neuralNetworkLayerChain;
+
+    List<Layer> layerArraylist;
 
     @BlockProperty(name="NumberOfInputs", type=NUMBER)
-    int nIn;
+    Integer nIn;
 
     @BlockProperty(name="NumberOfOutputs", type=NUMBER)
-    int nOut;
+    Integer nOut;
 
     @BlockProperty(name="LayerType", type=STRING)
     String layerType;
@@ -38,8 +42,11 @@ public class NeuralNetworkLayerChain {
 
     @BlockExecute
     void process(){
-        if(layerArraylist==null){
-            layerArraylist=new ArrayList<>();
+        if(neuralNetworkLayerChain==null){
+            neuralNetworkLayerChain=this;
+        }
+        if(neuralNetworkLayerChain.layerArraylist==null){
+            neuralNetworkLayerChain.layerArraylist=new ArrayList<>();
         }
         Layer layer;
         switch (layerType){
@@ -47,7 +54,7 @@ public class NeuralNetworkLayerChain {
                     new OutputLayer.Builder()
                             .nIn(nIn)
                             .nOut(nOut)
-                            .dropOut(dropOut)
+                          //  .dropOut(dropOut)
                             .activation(parseActivation(activationFunction))
                             .lossFunction(parseLossFunction(lossFunction))
                             .build();
@@ -56,7 +63,7 @@ public class NeuralNetworkLayerChain {
                     new DenseLayer.Builder()
                             .nIn(nIn)
                             .nOut(nOut)
-                            .dropOut(dropOut)
+                         //   .dropOut(dropOut)
                             .activation(parseActivation(activationFunction))
                             .build();
                 break;
@@ -93,7 +100,12 @@ public class NeuralNetworkLayerChain {
                             .build()
                     ;
         }
-        layerArraylist.add(layer);
+        neuralNetworkLayerChain.layerArraylist.add(layer);
+
+    }
+
+    public List<Layer> getLayerArraylist() {
+        return layerArraylist;
     }
 
 }

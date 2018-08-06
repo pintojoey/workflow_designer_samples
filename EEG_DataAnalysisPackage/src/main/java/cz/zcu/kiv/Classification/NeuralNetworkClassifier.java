@@ -165,32 +165,55 @@ public class NeuralNetworkClassifier implements IClassifier,Serializable {
         logger.info("Managed to set the basic configuration ");
 
         int numLayers = 0;
-        for (String key : config.keySet()){
-            if(key.startsWith("config_layer")){
-                numLayers++;
+        if(layerChain==null){
+            for (String key : config.keySet()){
+                if(key.startsWith("config_layer")){
+                    numLayers++;
+                }
+            }
+            numLayers = numLayers/4;
+            for (int id = 1; id <= numLayers; id++ ){
+                builder.layer(id-1, parseLayer(id,config.get("config_layer" + id + "_layer_type")));
+            }
+
+            logger.info("Number of layers " + numLayers);
+
+            if(config.get("config_pretrain").equalsIgnoreCase("true")){
+                builder.pretrain(true);
+            }
+            else{
+                builder.pretrain(false);
+            }
+            if(config.get("config_backprop").equalsIgnoreCase("true")){
+                builder.backprop(true);
+            }
+            else{
+                builder.backprop(false);
             }
         }
-        numLayers = numLayers/4;
-        for (int id = 1; id <= numLayers; id++ ){
-            if(layerChain==null)
-                builder.layer(id-1, parseLayer(id,config.get("config_layer" + id + "_layer_type")));
-            else
-                builder.layer(id-1,layerChain.layerArraylist.get(id));
-        }
-        logger.info("Number of layers " + numLayers);
+        else{
+            numLayers = layerChain.getLayerArraylist().size();
 
-        if(config.get("config_pretrain").equalsIgnoreCase("true")){
-            builder.pretrain(true);
+            for (int id = 0; id < numLayers; id++ ){
+                builder.layer(id,layerChain.layerArraylist.get(id));
+            }
+
+            logger.info("Number of layers " + numLayers);
+
+            if(pretrain!=null&&pretrain){
+                builder.pretrain(true);
+            }
+            else{
+                builder.pretrain(false);
+            }
+            if(backPropogation!=null&&backPropogation){
+                builder.backprop(true);
+            }
+            else{
+                builder.backprop(false);
+            }
         }
-        else{
-            builder.pretrain(false);
-        }
-        if(config.get("config_backprop").equalsIgnoreCase("true")){
-            builder.backprop(true);
-        }
-        else{
-            builder.backprop(false);
-        }
+
 
         MultiLayerConfiguration conf = builder.build();
 
@@ -327,7 +350,7 @@ public class NeuralNetworkClassifier implements IClassifier,Serializable {
                     new OutputLayer.Builder()
                             .nIn(nIn)
                             .nOut(Integer.parseInt(config.get("config_layer" + (id) + "_n_out")))
-                            .dropOut(Double.parseDouble(config.get("config_layer"+ (id) + "_drop_out")))
+                          //  .dropOut(Double.parseDouble(config.get("config_layer"+ (id) + "_drop_out")))
                             .activation(parseActivation(config.get("config_layer" + (id) + "_activation_function")))
                             .lossFunction(parseLossFunction(config.get("config_loss_function")))
                             .build()
@@ -336,7 +359,7 @@ public class NeuralNetworkClassifier implements IClassifier,Serializable {
                     new DenseLayer.Builder()
                             .nIn(nIn)
                             .nOut(Integer.parseInt(config.get("config_layer" + (id) + "_n_out")))
-                            .dropOut(Double.parseDouble(config.get("config_layer"+ (id) + "_drop_out")))
+                           // .dropOut(Double.parseDouble(config.get("config_layer"+ (id) + "_drop_out")))
                             .activation(parseActivation(config.get("config_layer" + (id) + "_activation_function")))
                             .build()
                     ;

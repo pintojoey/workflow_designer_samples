@@ -88,4 +88,33 @@ public class PipelineTest{
 
     }
 
+    @Test
+    public void ann_test() throws Exception {
+        PipelineBuilder trainingPipelineBuilder = new PipelineBuilder("" +
+                "info_file="+REMOTE_TEST_DATA_DIRECTORY+TRAINING_FILE +
+                "&fe=dwt-8" +
+                "&train_clf=nn" +
+                "&config_seed=1" +
+                "&config_num_iterations=10"+
+                "&config_learning_rate=0.5"+
+                "&config_momentum=0.05"+
+                "&config_weight_init=xavier"+
+                "&config_updater=sigmoid"+
+                "&config_optimization_algo=line_gradient_descent"+
+                "&config_pretrain=false"+
+                "&config_backprop=false"+
+                "&config_layer0_layer_type=dense"+
+                "&config_layer1_layer_type=dense"+
+                "&config_layer1_n_out=5"+
+                "&config_layer1_drop_out=0"+
+                "&config_layer1_activation_function=sigmoid"+
+                "&config_layer2_layer_type=output"+
+                "&config_layer2_n_out=5"+
+                "&config_layer2_activation_function=sigmoid"+
+                "&config_layer2_drop_out=0"+
+                "&config_loss_function=negativeloglikelihood"
+        );
+        trainingPipelineBuilder.execute();
+    }
+
 }

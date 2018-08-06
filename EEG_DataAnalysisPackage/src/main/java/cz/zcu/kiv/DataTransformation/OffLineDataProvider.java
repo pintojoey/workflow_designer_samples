@@ -19,6 +19,7 @@ import java.net.URI;
 import java.nio.ByteOrder;
 import java.util.*;
 
+import static cz.zcu.kiv.Utils.Const.HADOOP_USER_NAME;
 import static cz.zcu.kiv.WorkflowConstants.DataField.*;
 import static cz.zcu.kiv.WorkflowConstants.DataType.*;
 import static cz.zcu.kiv.WorkflowConstants.Field.FILE_LOCATION_FIELD;
@@ -110,6 +111,7 @@ public class OffLineDataProvider implements Serializable {
      */
     public void loadData()  {
         try {
+            System.setProperty(Const.HADOOP_USER_NAME_KEY,HADOOP_USER_NAME);
             Const.HDFS_CONF.set("fs.defaultFS",Const.HDFS_URI);
             Const.HDFS_CONF.set("fs.hdfs.impl", org.apache.hadoop.hdfs.DistributedFileSystem.class.getName());
             Const.HDFS_CONF.set("fs.file.impl", org.apache.hadoop.fs.LocalFileSystem.class.getName());

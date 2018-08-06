@@ -49,14 +49,14 @@ public class WorkflowDesignerTest {
 
     @After
     public void unintializeHDFSTest() throws IOException {
-        //EEGTest.unintializeHDFSTest();
+        EEGTest.unintializeHDFSTest();
     }
 
 
     @Test
     public void workflow_initializer_test() throws  NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         JSONArray blocks_array = new Workflow(ClassLoader.getSystemClassLoader(),"workflow:cz.zcu.kiv",null,"").initializeBlocks();
-        assert blocks_array.length()==3;
+        assert blocks_array.length()==5;
     }
 
     @Test
@@ -64,14 +64,17 @@ public class WorkflowDesignerTest {
         String json = FileUtils.readFileToString(new File("workflow_designer/export.json"),Charset.defaultCharset());
         JSONObject jsonObject = new JSONObject(json);
         Workflow workflow = new Workflow(ClassLoader.getSystemClassLoader(),"workflow:cz.zcu.kiv",null,"");
-        workflow.execute(jsonObject,"test-data",null);
+        JSONArray result = workflow.execute(jsonObject,"test-data",null);
+        assert result!=null && result.length()!=0;
     }
 
+
     @Test
-    public void ann_workflow_test() throws Exception{
+    public void ann_chain_test() throws Exception{
         String json = FileUtils.readFileToString(new File("workflow_designer/ann.json"),Charset.defaultCharset());
         JSONObject jsonObject = new JSONObject(json);
         Workflow workflow = new Workflow(ClassLoader.getSystemClassLoader(),"workflow:cz.zcu.kiv",null,"");
-        workflow.execute(jsonObject,"test-data",null);
+        JSONArray result = workflow.execute(jsonObject,"test-data",null);
+        assert result!=null && result.length()!=0;
     }
 }
