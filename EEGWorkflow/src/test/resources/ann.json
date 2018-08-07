@@ -206,7 +206,7 @@
             "x": -117.93950906690765,
             "y": 95.8566432534796,
             "type": "NeuralNetworkLayer",
-            "module": "spark_eeg-1.3-allinone.jar:cz.zcu.kiv",
+            "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
             "values": {
                 "NumberOfOutputs": "12",
                 "ActivationFunction": "relu",
@@ -236,7 +236,7 @@
             "x": 97.4515729655675,
             "y": 100.91722868331698,
             "type": "NeuralNetworkLayer",
-            "module": "spark_eeg-1.3-allinone.jar:cz.zcu.kiv",
+            "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
             "values": {
                 "NumberOfOutputs": "2",
                 "ActivationFunction": "softmax",
@@ -251,7 +251,7 @@
             "x": -476.5450229575979,
             "y": 93.73547239380491,
             "type": "NeuralNetworkLayer",
-            "module": "spark_eeg-1.3-allinone.jar:cz.zcu.kiv",
+            "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
             "values": {
                 "NumberOfOutputs": "48",
                 "ActivationFunction": "relu",
