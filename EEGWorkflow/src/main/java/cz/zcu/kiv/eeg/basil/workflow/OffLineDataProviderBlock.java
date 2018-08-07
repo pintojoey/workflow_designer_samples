@@ -13,7 +13,7 @@ import java.nio.ByteOrder;
 import java.util.*;
 
 @BlockType(type="OffLineDataProvider", family = "DataProvider")
-public class OffLineDataProviderBlock implements Serializable {
+public class OffLineDataProviderBlock {
     private static final String VHDR_EXTENSION = ".vhdr";
     private static final String VMRK_EXTENSION = ".vmrk";
 
