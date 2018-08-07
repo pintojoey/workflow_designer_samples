@@ -27,32 +27,6 @@
             ]
         },
         {
-            "id": 17,
-            "block1": 4,
-            "connector1": [
-                "EEGData",
-                "output"
-            ],
-            "block2": 3,
-            "connector2": [
-                "EEGData",
-                "input"
-            ]
-        },
-        {
-            "id": 18,
-            "block1": 3,
-            "connector1": [
-                "EEGData",
-                "output"
-            ],
-            "block2": 10,
-            "connector2": [
-                "EEGData",
-                "input"
-            ]
-        },
-        {
             "id": 19,
             "block1": 9,
             "connector1": [
@@ -117,6 +91,46 @@
                 "LayerChain",
                 "input"
             ]
+        },
+        {
+            "id": 26,
+            "block1": 16,
+            "connector1": [
+                "marker",
+                "output"
+            ],
+            "block2": 10,
+            "connector2": [
+                "Markers",
+                "input",
+                0
+            ]
+        },
+        {
+            "id": 27,
+            "block1": 4,
+            "connector1": [
+                "EEGData",
+                "output"
+            ],
+            "block2": 17,
+            "connector2": [
+                "EEGData",
+                "input"
+            ]
+        },
+        {
+            "id": 28,
+            "block1": 17,
+            "connector1": [
+                "EEGData",
+                "output"
+            ],
+            "block2": 10,
+            "connector2": [
+                "EEGData",
+                "input"
+            ]
         }
     ],
     "blocks": [
@@ -147,14 +161,14 @@
             }
         },
         {
-            "id": 3,
-            "x": 111.70024829855981,
-            "y": -189.33004065736526,
-            "type": "BaselineCorrection",
+            "id": 16,
+            "x": 91.92147374269086,
+            "y": -8.38324165562915,
+            "type": "EEGMarkerBlock",
             "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
             "values": {
-                "EndTime": "100",
-                "StartTime": "0"
+                "Name": "S  4",
+                "Offset": "-1"
             }
         },
         {
@@ -181,8 +195,8 @@
         },
         {
             "id": 10,
-            "x": 316.36849663955377,
-            "y": 16.064316023414165,
+            "x": 318.23448807281795,
+            "y": -158.4058829867841,
             "type": "NeuralNetClassifier",
             "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
             "values": {}
@@ -245,6 +259,17 @@
                 "LossFunction": "xent",
                 "NumberOfInputs": "48",
                 "DropOut": ""
+            }
+        },
+        {
+            "id": 17,
+            "x": 100.849405208804,
+            "y": -192.25936158993102,
+            "type": "BaselineCorrection",
+            "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
+            "values": {
+                "EndTime": "100",
+                "StartTime": "0"
             }
         }
     ]

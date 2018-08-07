@@ -107,7 +107,6 @@ public class ChainTest {
         Table table = eegDataTableVisualizer.proces();
 
         assert table!=null;
-        System.out.println(table.toJSON().toString(4));
 
 
     }
