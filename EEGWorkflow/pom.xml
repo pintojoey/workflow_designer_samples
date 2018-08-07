@@ -98,30 +98,37 @@
 			<!--<artifactId>batik</artifactId>-->
 			<!--<version>1.5</version>-->
 		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>org.nd4j</groupId>-->
-			<!--<artifactId>${nd4j.backend}</artifactId>-->
-		<!--</dependency>-->
+		<dependency>
+			<groupId>org.nd4j</groupId>
+			<artifactId>${nd4j.backend}</artifactId>
+		</dependency>
 
-		<!--&lt;!&ndash; Core DL4J functionality &ndash;&gt;-->
-		<!--<dependency>-->
-			<!--<groupId>org.deeplearning4j</groupId>-->
-			<!--<artifactId>deeplearning4j-core</artifactId>-->
-			<!--<version>${dl4j.version}</version>-->
-		<!--</dependency>-->
+		<!-- Core DL4J functionality -->
+        <dependency>
+            <groupId>org.deeplearning4j</groupId>
+            <artifactId>deeplearning4j-core</artifactId>
+            <version>${dl4j.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.deeplearning4j/deeplearning4j-ui -->
+        <dependency>
+            <groupId>org.deeplearning4j</groupId>
+            <artifactId>deeplearning4j-ui_2.11</artifactId>
+            <version>${dl4j.version}</version>
+        </dependency>
 
-		<!--<dependency>-->
-			<!--<groupId>org.deeplearning4j</groupId>-->
-			<!--<artifactId>deeplearning4j-nlp</artifactId>-->
-			<!--<version>${dl4j.version}</version>-->
-		<!--</dependency>-->
 
-		<!--&lt;!&ndash; deeplearning4j-ui is used for HistogramIterationListener + visualization: see http://deeplearning4j.org/visualization &ndash;&gt;-->
-		<!--<dependency>-->
-			<!--<groupId>org.deeplearning4j</groupId>-->
-			<!--<artifactId>deeplearning4j-ui_2.10</artifactId>-->
-			<!--<version>${dl4j.version}</version>-->
-		<!--</dependency>-->
+        <dependency>
+			<groupId>org.deeplearning4j</groupId>
+			<artifactId>deeplearning4j-nlp</artifactId>
+			<version>${dl4j.version}</version>
+		</dependency>
+
+		<!-- deeplearning4j-ui is used for HistogramIterationListener + visualization: see http://deeplearning4j.org/visualization -->
+		<dependency>
+			<groupId>org.deeplearning4j</groupId>
+			<artifactId>deeplearning4j-ui_2.10</artifactId>
+			<version>${dl4j.version}</version>
+		</dependency>
 
 		<!--<dependency>-->
 			<!--<groupId>gov.nist.math</groupId>-->
@@ -322,10 +329,11 @@
     		<!--<version>4.2.2</version>-->
 		<!--</dependency>-->
 
+
 		<dependency>
 			<groupId>cz.zcu.kiv</groupId>
 			<artifactId>workflow_designer</artifactId>
-			<version>1.13</version>
+			<version>1.14</version>
 		</dependency>
 
 

@@ -1,0 +1,139 @@
+{
+    "edges": [
+        {
+            "id": 1,
+            "block1": 1,
+            "connector1": [
+                "EEGData",
+                "output"
+            ],
+            "block2": 2,
+            "connector2": [
+                "EEGData",
+                "input"
+            ]
+        },
+        {
+            "id": 15,
+            "block1": 4,
+            "connector1": [
+                "EEGData",
+                "output"
+            ],
+            "block2": 3,
+            "connector2": [
+                "EEGData",
+                "input"
+            ]
+        },
+        {
+            "id": 16,
+            "block1": 2,
+            "connector1": [
+                "EEGData",
+                "output"
+            ],
+            "block2": 4,
+            "connector2": [
+                "EEGData",
+                "input"
+            ]
+        },
+        {
+            "id": 18,
+            "block1": 9,
+            "connector1": [
+                "marker",
+                "output"
+            ],
+            "block2": 11,
+            "connector2": [
+                "Markers",
+                "input",
+                0
+            ]
+        },
+        {
+            "id": 19,
+            "block1": 3,
+            "connector1": [
+                "EEGData",
+                "output"
+            ],
+            "block2": 11,
+            "connector2": [
+                "EEGData",
+                "input"
+            ]
+        }
+    ],
+    "blocks": [
+        {
+            "id": 1,
+            "x": -448,
+            "y": -181,
+            "type": "OffLineDataProvider",
+            "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
+            "values": {
+                "EEG File": [
+                    "P300/LED_28_06_2012_104.eeg"
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "x": -279,
+            "y": -179,
+            "type": "ChannelSelection",
+            "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
+            "values": {
+                "channels": [
+                    "Cz",
+                    "Pz",
+                    "Fz"
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "x": 111.70024829855981,
+            "y": -189.33004065736526,
+            "type": "BaselineCorrection",
+            "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
+            "values": {
+                "EndTime": "100",
+                "StartTime": "0"
+            }
+        },
+        {
+            "id": 4,
+            "x": -83.27733786718733,
+            "y": -188.52420391560008,
+            "type": "EpochExtraction",
+            "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
+            "values": {
+                "PreStimulus onset": "100",
+                "PostStimulus onset": "1000"
+            }
+        },
+        {
+            "id": 11,
+            "x": 322.8004633476826,
+            "y": -164.90941528983097,
+            "type": "NeuralNetClassifier",
+            "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
+            "values": {}
+        },
+        {
+            "id": 9,
+            "x": 120.07416146776018,
+            "y": -90.72761002116204,
+            "type": "EEGMarkerBlock",
+            "module": "basil_bci-0.1.0-jar-with-dependencies.jar:cz.zcu.kiv.eeg.basil",
+            "values": {
+                "Name": "S  2",
+                "Offset": "-1"
+            }
+        }
+    ]
+}

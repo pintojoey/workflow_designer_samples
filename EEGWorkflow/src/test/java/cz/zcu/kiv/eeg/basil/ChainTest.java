@@ -113,10 +113,17 @@ public class ChainTest {
     }
 
     @Test
-    public void testWorkflow() throws IOException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, FieldMismatchException {
+    public void testChainWorkflow() throws IOException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, FieldMismatchException {
         String json=FileUtils.readFileToString(new File("src/test/resources/chain.json"));
         JSONObject jsonObject = new JSONObject(json);
 
+        JSONArray jsonArray = new Workflow(ClassLoader.getSystemClassLoader(), ":cz.zcu.kiv.eeg.basil",null,"src/test/resources/data").execute(jsonObject,"test_result",null);
+        assert jsonArray !=null;
+    }
+    @Test
+    public void testAnnWorkflow() throws IOException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, FieldMismatchException {
+        String json=FileUtils.readFileToString(new File("src/test/resources/ann.json"));
+        JSONObject jsonObject = new JSONObject(json);
         JSONArray jsonArray = new Workflow(ClassLoader.getSystemClassLoader(), ":cz.zcu.kiv.eeg.basil",null,"src/test/resources/data").execute(jsonObject,"test_result",null);
         assert jsonArray !=null;
     }

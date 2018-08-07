@@ -20,7 +20,7 @@ public class EpochExtractionBlock {
     @BlockInput(name = "EEGData", type = "EEGDataList")
     private EEGDataPackageList eegDataPackageList;
 
-    @BlockOutput(name = "Epochs", type = "EEGDataList")
+    @BlockOutput(name = "EEGData", type = "EEGDataList")
     private EEGDataPackageList epochs;
 
 
