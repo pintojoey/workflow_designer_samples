@@ -22,12 +22,15 @@ public class NeuralNetClassifierBlock {
 	@BlockInput(name = "EEGData", type = "EEGDataList")
 	private EEGDataPackageList epochs;
 
+    @BlockInput(name="Layers", type="NeuralNetworkLayerChain")
+    private NeuralNetworkLayerChain layerChain;
+
 	public NeuralNetClassifierBlock(){
 		//Required Empty Default Constructor for Workflow Designer
 	}
 
 	@BlockExecute
-    public void process(){
+    public String process(){
 		ITrainCondition trainCondition = new ErpTrainCondition();
 		for (EEGDataPackage dataPackage : epochs.getEegDataPackage()) {
 
@@ -42,12 +45,14 @@ public class NeuralNetClassifierBlock {
 			FeatureVector features = dwt.extractFeatures(dataPackage);
 			fv.addFeatures(features);
 
-			trainCondition.addSample(fv, "S  2", marker);
-
+			for(EEGMarker marker1:markers){
+                trainCondition.addSample(fv, marker1.getName(), marker);
+            }
 
 		}
-		IClassifier classification = new SDADeepLearning4jClassifier();
+		SDADeepLearning4jClassifier classification = new SDADeepLearning4jClassifier(layerChain.layerArraylist);
 		classification.train(trainCondition.getFeatureVectors(), 10);
+        return classification.result;
     }
 
 

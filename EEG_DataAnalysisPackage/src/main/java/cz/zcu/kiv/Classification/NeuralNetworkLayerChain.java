@@ -13,7 +13,7 @@ import static cz.zcu.kiv.Classification.NeuralNetworkClassifier.parseLossFunctio
 import static cz.zcu.kiv.WorkflowConstants.WorkflowFamily.MACHINE_LEARNING;
 import static cz.zcu.kiv.WorkflowDesigner.Type.NUMBER;
 
-@BlockType(type="NeuralNetworkLayer", family = MACHINE_LEARNING, runAsJar = true)
+@BlockType(type="NeuralNetworkLayer", family = MACHINE_LEARNING)
 public class NeuralNetworkLayerChain implements Serializable {
 
     @BlockInput(name ="LayerChain",type="NeuralNetworkLayerChain")

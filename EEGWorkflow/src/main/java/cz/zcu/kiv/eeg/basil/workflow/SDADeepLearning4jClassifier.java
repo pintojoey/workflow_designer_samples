@@ -2,25 +2,20 @@ package cz.zcu.kiv.eeg.basil.workflow;
 
 import org.deeplearning4j.api.storage.StatsStorage;
 import org.deeplearning4j.eval.Evaluation;
-import org.deeplearning4j.nn.api.Layer;
 import org.deeplearning4j.nn.api.OptimizationAlgorithm;
 import org.deeplearning4j.nn.conf.GradientNormalization;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
-import org.deeplearning4j.nn.conf.layers.AutoEncoder;
-import org.deeplearning4j.nn.conf.layers.OutputLayer;
+import org.deeplearning4j.nn.conf.layers.Layer;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
-import org.deeplearning4j.nn.weights.WeightInit;
 import org.deeplearning4j.optimize.listeners.*;
 import org.deeplearning4j.ui.stats.StatsListener;
 import org.deeplearning4j.ui.storage.InMemoryStatsStorage;
-import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.dataset.DataSet;
 import org.nd4j.linalg.dataset.SplitTestAndTrain;
 import org.nd4j.linalg.factory.Nd4j;
 import org.nd4j.linalg.learning.config.Nesterovs;
-import org.nd4j.linalg.lossfunctions.LossFunctions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +26,13 @@ import java.util.List;
 public class SDADeepLearning4jClassifier extends DeepLearning4jClassifier {
     private final int NEURON_COUNT_DEFAULT = 30;    //default number of neurons
     protected final int neuronCount;                    // Number of neurons
+    public String result;
+    List<Layer>layers;
 
     /*Default constructor*/
-    public SDADeepLearning4jClassifier() {
+    public SDADeepLearning4jClassifier(List<Layer>layers) {
         this.neuronCount = NEURON_COUNT_DEFAULT;
+        this.layers = layers;
     }
 
     /*Parametric constructor */
@@ -47,7 +45,7 @@ public class SDADeepLearning4jClassifier extends DeepLearning4jClassifier {
     public double classify(FeatureVector fv) {
         double[][] featureVector = fv.getFeatureMatrix(); // Extracting features to vector
         INDArray features = Nd4j.create(featureVector); // Creating INDArray with extracted features
-        return model.output(features, Layer.TrainingMode.TEST).getDouble(0); // Result of classifying
+        return model.output(features, org.deeplearning4j.nn.api.Layer.TrainingMode.TEST).getDouble(0); // Result of classifying
     }
 
     @Override
@@ -110,14 +108,15 @@ public class SDADeepLearning4jClassifier extends DeepLearning4jClassifier {
 
         Evaluation eval = new Evaluation(numColumns);
         DataSet tst = tat.getTest();
-        eval.eval(tst.getLabels(), model.output(tst.getFeatureMatrix(), Layer.TrainingMode.TEST));
+        eval.eval(tst.getLabels(), model.output(tst.getFeatureMatrix(), org.deeplearning4j.nn.api.Layer.TrainingMode.TEST));
         System.out.println(eval.stats());
+        result=eval.stats();
     }
 
     //  initialization of neural net with params. For more info check http://deeplearning4j.org/iris-flower-dataset-tutorial where is more about params
     private void build(int numRows, int outputNum, int seed, int listenerFreq) {
         System.out.print("Build model....SDA");
-        MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
+        NeuralNetConfiguration.ListBuilder builder = new NeuralNetConfiguration.Builder()
                 //.seed(seed)
                 //.iterations(1500)
                 .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT)
@@ -127,7 +126,7 @@ public class SDADeepLearning4jClassifier extends DeepLearning4jClassifier {
                 //.l2(1e-4)
                 .gradientNormalizationThreshold(1)
                 .gradientNormalization(GradientNormalization.ClipElementWiseAbsoluteValue)
-                .list()
+                .list();
 /*                .layer(0, new AutoEncoder.Builder()
                         .nIn(numRows)
                         .nOut(48)
@@ -136,23 +135,28 @@ public class SDADeepLearning4jClassifier extends DeepLearning4jClassifier {
                         //.corruptionLevel(0.2) // Set level of corruption
                         .lossFunction(LossFunctions.LossFunction.MCXENT)
                         .build())*/
-                .layer(0, new AutoEncoder.Builder().nOut(24).nIn(48)
-                        .weightInit(WeightInit.XAVIER)
-                        .activation(Activation.LEAKYRELU)
-                        //.corruptionLevel(0.1) // Set level of corruption
-                        .lossFunction(LossFunctions.LossFunction.MCXENT)
-                        .build())
-                .layer(1, new AutoEncoder.Builder().nOut(12).nIn(24)
-                        .weightInit(WeightInit.XAVIER)
-                        .activation(Activation.LEAKYRELU)
-                        //.corruptionLevel(0.1) // Set level of corruption
-                        .lossFunction(LossFunctions.LossFunction.MCXENT)
-                        .build())
-                .layer(2, new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
-                        .weightInit(WeightInit.XAVIER)
-                        .activation(Activation.SOFTMAX)
-                        .nOut(outputNum).nIn(12).build())
-                .pretrain(false).backprop(true).build();
+//                .layer(0, new AutoEncoder.Builder().nOut(24).nIn(48)
+//                        .weightInit(WeightInit.XAVIER)
+//                        .activation(Activation.LEAKYRELU)
+//                        //.corruptionLevel(0.1) // Set level of corruption
+//                        .lossFunction(LossFunctions.LossFunction.MCXENT)
+//                        .build())
+//                .layer(1, new AutoEncoder.Builder().nOut(12).nIn(24)
+//                        .weightInit(WeightInit.XAVIER)
+//                        .activation(Activation.LEAKYRELU)
+//                        //.corruptionLevel(0.1) // Set level of corruption
+//                        .lossFunction(LossFunctions.LossFunction.MCXENT)
+//                        .build())
+//                .layer(2, new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
+//                        .weightInit(WeightInit.XAVIER)
+//                        .activation(Activation.SOFTMAX)
+//                        .nOut(outputNum).nIn(12).build())
+//                ;
+
+                for(int i=0;i<layers.size();i++){
+                    builder.layer(i,layers.get(i));
+                }
+        MultiLayerConfiguration conf = builder.pretrain(false).backprop(true).build();
 /*                .list()
                 .layer(0, new AutoEncoder.Builder().nIn(numRows).nOut(24)
                         .weightInit(WeightInit.XAVIER)

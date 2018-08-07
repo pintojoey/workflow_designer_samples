@@ -17,6 +17,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: batik:batik:1.5" level="project" />
     <orderEntry type="library" name="Maven: org.nd4j:nd4j-native-platform:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:openblas-platform:0.3.0-1.4.2" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:openblas:0.3.0-1.4.2" level="project" />
@@ -163,7 +164,6 @@
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:leptonica:windows-x86_64:1.76.0-1.4.2" level="project" />
     <orderEntry type="library" name="Maven: org.deeplearning4j:deeplearning4j-ui-components:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.10" level="project" />
-    <orderEntry type="library" name="Maven: org.deeplearning4j:deeplearning4j-ui_2.11:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.deeplearning4j:deeplearning4j-nlp:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.nd4j:nd4j-native-api:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
