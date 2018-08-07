@@ -57,7 +57,7 @@
             "id": 8,
             "block1": 4,
             "connector1": [
-                "Epochs",
+                "EEGData",
                 "output"
             ],
             "block2": 3,
