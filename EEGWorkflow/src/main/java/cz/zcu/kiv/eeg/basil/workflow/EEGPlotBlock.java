@@ -5,11 +5,12 @@ import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockInput;import cz.zcu.kiv.Work
 import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockType;
 import cz.zcu.kiv.WorkflowDesigner.Visualizations.PlotlyGraphs.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @BlockType(type="EEGPlot",family="Visualization")
-public class EEGPlotBlock {
+public class EEGPlotBlock implements Serializable {
 
     @BlockInput(name = "EEGData", type = "EEGDataList")
     private EEGDataPackageList eegDataList;

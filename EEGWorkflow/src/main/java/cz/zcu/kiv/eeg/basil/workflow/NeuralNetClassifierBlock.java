@@ -7,6 +7,7 @@ import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockType;
 import cz.zcu.kiv.WorkflowDesigner.Visualizations.Table;
 import org.deeplearning4j.eval.Evaluation;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,8 +17,8 @@ import java.util.List;
  * @author lvareka
  *
  */
-@BlockType(type="NeuralNetClassifier",family = "Classification")
-public class NeuralNetClassifierBlock {
+@BlockType(type="NeuralNetClassifier",family = "Classification", runAsJar = true)
+public class NeuralNetClassifierBlock implements Serializable {
 
 	@BlockInput(name = "Markers",type="EEGMarker[]")
 	private List<EEGMarker> markers;

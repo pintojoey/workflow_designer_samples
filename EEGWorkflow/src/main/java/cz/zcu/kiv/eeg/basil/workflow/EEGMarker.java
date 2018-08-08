@@ -1,6 +1,8 @@
 package cz.zcu.kiv.eeg.basil.workflow;
 
 
+import java.io.Serializable;
+
 /**
  * Created by Tomas Prokop on 17.07.2017.
  * 
@@ -11,7 +13,7 @@ package cz.zcu.kiv.eeg.basil.workflow;
  * experiments
  * 
  */
-public class EEGMarker {
+public class EEGMarker implements Serializable {
 
     /**
      * Marker name

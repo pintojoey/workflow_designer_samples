@@ -1,12 +1,13 @@
 package cz.zcu.kiv.eeg.basil.workflow;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Tomas Prokop on 15.08.2017.
  */
-public class ErpTrainCondition implements ITrainCondition {
+public class ErpTrainCondition implements ITrainCondition, Serializable {
 
     private int targetCnt = 0;
     private int nontargetCnt = 0;

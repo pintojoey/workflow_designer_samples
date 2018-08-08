@@ -6,6 +6,8 @@ import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockProperty;
 import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockType;
 import cz.zcu.kiv.WorkflowDesigner.Type;
 
+import java.io.Serializable;
+
 
 /**
  * Created by Tomas Prokop on 17.07.2017.
@@ -18,7 +20,7 @@ import cz.zcu.kiv.WorkflowDesigner.Type;
  * 
  */
 @BlockType(type="EEGMarkerBlock",family = "Preprocessing")
-public class EEGMarkerBlock {
+public class EEGMarkerBlock implements Serializable {
 
     /**
      * Marker name

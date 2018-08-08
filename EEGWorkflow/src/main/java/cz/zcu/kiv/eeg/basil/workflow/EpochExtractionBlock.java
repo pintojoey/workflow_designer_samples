@@ -2,6 +2,7 @@ package cz.zcu.kiv.eeg.basil.workflow;
 
 import cz.zcu.kiv.WorkflowDesigner.Annotations.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 import static cz.zcu.kiv.WorkflowDesigner.Type.NUMBER;
 
 @BlockType(type="EpochExtraction",family = "Preprocessing")
-public class EpochExtractionBlock {
+public class EpochExtractionBlock implements Serializable {
 
     @BlockProperty(name="PreStimulus onset",type=NUMBER, defaultValue = "0")
     private int preStimulus;  /* time before the stimulus onset in ms */

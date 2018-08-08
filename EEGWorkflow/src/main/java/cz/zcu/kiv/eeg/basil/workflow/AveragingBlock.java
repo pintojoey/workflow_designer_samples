@@ -5,6 +5,7 @@ import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockInput;
 import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockOutput;
 import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockType;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  *
  */
 @BlockType(type="AveragingBlock",family = "Preprocessing")
-public class AveragingBlock {
+public class AveragingBlock implements Serializable {
 
 	@BlockInput(name = "Markers",type="EEGMarker[]")
 	private List<EEGMarker> markers;

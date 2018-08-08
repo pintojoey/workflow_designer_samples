@@ -1,9 +1,10 @@
 package cz.zcu.kiv.eeg.basil.workflow;
 
 
+import java.io.Serializable;
 import java.util.List;
 
-public class EEGDataPackageList {
+public class EEGDataPackageList implements Serializable {
     List<EEGDataPackage> eegDataPackage;
 
     public EEGDataPackageList(List<EEGDataPackage> eegDataPackage) {

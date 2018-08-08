@@ -5,12 +5,13 @@ import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockInput;
 import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockType;
 import cz.zcu.kiv.WorkflowDesigner.Visualizations.Table;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @BlockType(type="EEGDataTable",family = "Visualization")
-public class EEGDataTableVisualizer {
+public class EEGDataTableVisualizer implements Serializable {
 
     @BlockInput(name="EEGData",type = "EEGDataList")
     private EEGDataPackageList eegDataPackageList;

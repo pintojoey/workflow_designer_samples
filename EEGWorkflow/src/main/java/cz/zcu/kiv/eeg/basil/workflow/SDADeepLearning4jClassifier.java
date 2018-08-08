@@ -17,13 +17,14 @@ import org.nd4j.linalg.dataset.SplitTestAndTrain;
 import org.nd4j.linalg.factory.Nd4j;
 import org.nd4j.linalg.learning.config.Nesterovs;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by lukasvareka on 27. 6. 2016.
  */
-public class SDADeepLearning4jClassifier extends DeepLearning4jClassifier {
+public class SDADeepLearning4jClassifier extends DeepLearning4jClassifier implements Serializable {
     private final int NEURON_COUNT_DEFAULT = 30;    //default number of neurons
     protected final int neuronCount;                    // Number of neurons
     public String result;

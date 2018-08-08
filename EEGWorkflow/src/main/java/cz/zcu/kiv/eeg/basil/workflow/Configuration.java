@@ -1,6 +1,8 @@
 package cz.zcu.kiv.eeg.basil.workflow;
 
-public class Configuration {
+import java.io.Serializable;
+
+public class Configuration implements Serializable {
     private double samplingInterval;
 
     public double getSamplingInterval() {

@@ -7,16 +7,13 @@ import org.nd4j.linalg.dataset.DataSet;
 import org.nd4j.linalg.factory.Nd4j;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.List;
 
 /**
  * Created by Tomas Prokop on 15.01.2018.
  */
-public abstract class DeepLearning4jClassifier implements IClassifier {
+public abstract class DeepLearning4jClassifier implements IClassifier,Serializable {
 
     protected MultiLayerNetwork model;            //multi layer neural network with a logistic output layer and multiple hidden neuralNets
     protected int iterations;                    //Iterations used to classify

@@ -2,6 +2,8 @@ package cz.zcu.kiv.eeg.basil.workflow;
 
 import cz.zcu.kiv.WorkflowDesigner.Annotations.*;
 
+import java.io.Serializable;
+
 import static cz.zcu.kiv.WorkflowDesigner.Type.NUMBER;
 
 /**
@@ -13,7 +15,7 @@ import static cz.zcu.kiv.WorkflowDesigner.Type.NUMBER;
  *  
  */
 @BlockType(type="BaselineCorrection",family="Preprocessing")
-public class BaselineCorrectionBlock {
+public class BaselineCorrectionBlock implements Serializable {
 
     @BlockProperty(name="StartTime",type = NUMBER, defaultValue = "")
 	private double startTime; /* in milliseconds */

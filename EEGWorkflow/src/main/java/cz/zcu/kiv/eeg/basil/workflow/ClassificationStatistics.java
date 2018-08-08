@@ -1,5 +1,7 @@
 package cz.zcu.kiv.eeg.basil.workflow;
 
+import java.io.Serializable;
+
 /**
  *
  * Holds results of classification if the target data with expected classes is
@@ -8,7 +10,7 @@ package cz.zcu.kiv.eeg.basil.workflow;
  * @author Lukas Vareka
  *
  */
-public class ClassificationStatistics {
+public class ClassificationStatistics implements Serializable {
 
     private int truePositives;
     private int trueNegatives;

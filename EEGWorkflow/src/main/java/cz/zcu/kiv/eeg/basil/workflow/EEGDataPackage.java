@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eeg.basil.workflow;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  *
  * Created by Tomas Prokop on 04.07.2017.
  */
-public class EEGDataPackage {
+public class EEGDataPackage implements Serializable {
 
     private Configuration configuration;
 

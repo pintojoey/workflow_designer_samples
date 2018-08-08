@@ -2,13 +2,14 @@ package cz.zcu.kiv.eeg.basil.workflow;
 
 import cz.zcu.kiv.WorkflowDesigner.Annotations.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import static cz.zcu.kiv.WorkflowDesigner.Type.STRING_ARRAY;
 
 @BlockType(type="ChannelSelection",family = "Preprocessing")
-public class ChannelSelectionBlock {
+public class ChannelSelectionBlock implements Serializable {
 
     @BlockProperty(name="channels",type = STRING_ARRAY)
     private List<String> selectedChannels;

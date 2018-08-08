@@ -1,12 +1,14 @@
 package cz.zcu.kiv.eeg.basil.workflow;
 
+import java.io.Serializable;
+
 /**
  * Represents a feature vector as
  * an input for classification
  * <p>
  * Created by Tomas Prokop on 07.08.2017.
  */
-public class FeatureVector {
+public class FeatureVector implements Serializable {
     private double[][] featureVector;
     private double expectedOutput;
 
