@@ -50,47 +50,16 @@ public class SDADeepLearning4jClassifier extends DeepLearning4jClassifier implem
     }
 
     @Override
-    public Evaluation train(List<FeatureVector> featureVectors, int numberOfiter) {
+    public Evaluation train(List<FeatureVector> trainingFeatureVectors, int numberOfiter) {
 
         // Customizing params of classifier
-        final int numRows = featureVectors.get(0).size();   // number of targets on a line
+        final int numRows = trainingFeatureVectors.get(0).size();   // number of targets on a line
         final int numColumns = 2;   // number of labels needed for classifying
         //this.iterations = numberOfiter; // number of iteration in the learning phase
         int listenerFreq = numberOfiter / 500; // frequency of output strings
         int seed = 123; //  seed - one of parameters. For more info check http://deeplearning4j.org/iris-flower-dataset-tutorial
 
-        DataSet dataSet2 = createDataSet(featureVectors);
-
-/*        final List<DataSet> lst = new ArrayList<>(featureVectors.size());
-        for (int i = 0; i < featureVectors.size(); i++) { // Iterating through epochs
-            FeatureVector fv = featureVectors.get(i); // Feature of each epoch
-            DataSet d;
-            INDArray matrix = Nd4j.create(fv.getFeatureMatrix());
-            double[] l = {fv.getExpectedOutput(),Math.abs(1 - fv.getExpectedOutput())};
-            INDArray label = Nd4j.create(l);
-            d = new DataSet(matrix, label);
-            lst.add(d);
-        }*/
-
-/*        BaseDataFetcher fetcher = new BaseDataFetcher() {
-            @Override
-            public void fetch(int numExamples) {
-                totalExamples = lst.size();
-
-                int from = this.cursor;
-                int to = this.cursor + numExamples;
-                if (to > this.totalExamples) {
-                    to = this.totalExamples;
-                }
-
-                initializeCurrFromList(lst.subList(from, to));
-                this.cursor += numExamples;
-            }
-        };
-
-
-
-        BaseDatasetIterator it = new BaseDatasetIterator(1, featureVectors.size(), fetcher);*/
+        DataSet dataSet2 = createDataSet(trainingFeatureVectors);
 
         SplitTestAndTrain tat = dataSet2.splitTestAndTrain(0.8);
         Nd4j.ENFORCE_NUMERICAL_STABILITY = true; // Setting to enforce numerical stability

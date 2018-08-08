@@ -128,7 +128,7 @@
             ],
             "block2": 10,
             "connector2": [
-                "EEGData",
+                "TrainingEEGData",
                 "input"
             ]
         }
