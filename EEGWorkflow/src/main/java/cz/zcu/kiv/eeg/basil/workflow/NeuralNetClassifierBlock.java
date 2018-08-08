@@ -4,7 +4,10 @@ import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockExecute;
 import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockInput;
 import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockOutput;
 import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockType;
+import cz.zcu.kiv.WorkflowDesigner.Visualizations.Table;
+import org.deeplearning4j.eval.Evaluation;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,7 +33,7 @@ public class NeuralNetClassifierBlock {
 	}
 
 	@BlockExecute
-    public String process(){
+    public Table process(){
 		ITrainCondition trainCondition = new ErpTrainCondition();
 		for (EEGDataPackage dataPackage : epochs.getEegDataPackage()) {
 
@@ -51,8 +54,22 @@ public class NeuralNetClassifierBlock {
 
 		}
 		SDADeepLearning4jClassifier classification = new SDADeepLearning4jClassifier(layerChain.layerArraylist);
-		classification.train(trainCondition.getFeatureVectors(), 10);
-        return classification.result;
+        Evaluation eval = classification.train(trainCondition.getFeatureVectors(), 10);
+        Table table = new Table();
+        List<List<String>>rows=new ArrayList<>();
+        rows.add(Arrays.asList("Precision",String.valueOf(eval.precision())));
+        rows.add(Arrays.asList("Recall",String.valueOf(eval.recall())));
+        rows.add(Arrays.asList("Accuracy",String.valueOf(eval.accuracy())));
+        rows.add(Arrays.asList("F1 Score",String.valueOf(eval.f1())));
+
+        //Confusion Matrix
+        rows.add(Arrays.asList("True +ve",String.valueOf(eval.truePositives().size())));
+        rows.add(Arrays.asList("True -ve",String.valueOf(eval.trueNegatives().size())));
+        rows.add(Arrays.asList("False +ve",String.valueOf(eval.falsePositives().size())));
+        rows.add(Arrays.asList("False -ve",String.valueOf(eval.falseNegatives().size())));
+        table.setRows(rows);
+
+        return table;
     }
 
 

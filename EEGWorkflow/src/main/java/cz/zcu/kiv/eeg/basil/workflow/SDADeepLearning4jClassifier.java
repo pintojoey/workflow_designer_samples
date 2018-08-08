@@ -49,7 +49,7 @@ public class SDADeepLearning4jClassifier extends DeepLearning4jClassifier {
     }
 
     @Override
-    public void train(List<FeatureVector> featureVectors, int numberOfiter) {
+    public Evaluation train(List<FeatureVector> featureVectors, int numberOfiter) {
 
         // Customizing params of classifier
         final int numRows = featureVectors.get(0).size();   // number of targets on a line
@@ -109,8 +109,7 @@ public class SDADeepLearning4jClassifier extends DeepLearning4jClassifier {
         Evaluation eval = new Evaluation(numColumns);
         DataSet tst = tat.getTest();
         eval.eval(tst.getLabels(), model.output(tst.getFeatureMatrix(), org.deeplearning4j.nn.api.Layer.TrainingMode.TEST));
-        System.out.println(eval.stats());
-        result=eval.stats();
+        return eval;
     }
 
     //  initialization of neural net with params. For more info check http://deeplearning4j.org/iris-flower-dataset-tutorial where is more about params

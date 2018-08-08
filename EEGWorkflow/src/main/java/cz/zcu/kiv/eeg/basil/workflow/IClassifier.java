@@ -1,5 +1,7 @@
 package cz.zcu.kiv.eeg.basil.workflow;
 
+import org.deeplearning4j.eval.Evaluation;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,10 +20,10 @@ public interface IClassifier {
 
 	/**
 	 * Train the classifier using information from the supervizor
-	 * @param featureVectors list of feature vectors
-	 * @param numberOfiter number of training iterations
-	 */
-    void train(List<FeatureVector> featureVectors, int numberOfiter);
+     * @param featureVectors list of feature vectors
+     * @param numberOfiter number of training iterations
+     */
+    Evaluation train(List<FeatureVector> featureVectors, int numberOfiter);
 	
 	/**
 	 * Test the classifier using the data with known resulting classes
