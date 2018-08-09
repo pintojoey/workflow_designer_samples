@@ -25,8 +25,7 @@ import static cz.zcu.kiv.WorkflowConstants.DataType.*;
 import static cz.zcu.kiv.WorkflowConstants.Field.FILE_LOCATION_FIELD;
 import static cz.zcu.kiv.WorkflowConstants.WorkflowBlock.INFOTXT_FILE;
 import static cz.zcu.kiv.WorkflowConstants.WorkflowFamily.OFFLINE_DATA_PROVIDER;
-import static cz.zcu.kiv.WorkflowDesigner.Type.STRING;
-import static cz.zcu.kiv.WorkflowDesigner.WorkflowCardinality.ONE_TO_MANY;
+import static cz.zcu.kiv.WorkflowDesigner.Type.FILE_LOCATION;
 
 /***********************************************************************************************************************
  *
@@ -76,13 +75,12 @@ public class OffLineDataProvider implements Serializable {
     private int numberOfTargets = 0;
     private int numberOfNonTargets = 0;
     private int epochsCounter = 0;
-    //
     private String filePrefix = "";
-    //
+
     private static Log logger = LogFactory.getLog(OffLineDataProvider.class);
 
-    @BlockProperty(name = FILE_LOCATION_FIELD, type = STRING , defaultValue = "Not Selected")
-    private String FILE_LOCATION;
+    @BlockProperty(name = FILE_LOCATION_FIELD, type = FILE_LOCATION , defaultValue = "Not Selected")
+    private String fileLocation;
 
     private String[] args;
     /**
@@ -146,7 +144,7 @@ public class OffLineDataProvider implements Serializable {
         }
         else {
             String fileLocation = args[0];
-            if(this.FILE_LOCATION!=null)fileLocation=FILE_LOCATION;
+            if(this.fileLocation !=null)fileLocation= this.fileLocation;
             // .EEG
             if (fileLocation.substring(fileLocation.length() - 4).equals(".eeg")){ // in this case we have a .eeg file
                 logger.info("Input file is .eeg file with location " + fileLocation);
@@ -412,9 +410,12 @@ public class OffLineDataProvider implements Serializable {
     @BlockExecute
     public void process() {
         try {
-            args=new String[]{FILE_LOCATION};
+            if(fileLocation.startsWith("HDFS/")){
+                fileLocation = fileLocation.replaceFirst("HDFS","");
+            }
+            args=new String[]{fileLocation};
             loadData();
-            loadFilesFromInfoTxt(FILE_LOCATION);
+            loadFilesFromInfoTxt(fileLocation);
         } catch (IOException e) {
             e.printStackTrace();
         }

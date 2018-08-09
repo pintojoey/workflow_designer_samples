@@ -120,7 +120,7 @@
             "type": "Infotxt File",
             "module": "spark_eeg-1.3-allinone.jar:cz.zcu.kiv",
             "values": {
-                "File location": "/data/demo/info.txt"
+                "File location": "HDFS/data/demo/info.txt"
             }
         },
         {
