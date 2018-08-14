@@ -14,7 +14,7 @@ import java.util.List;
  * @author lvareka
  *
  */
-@BlockType(type="AveragingBlock",family = "Preprocessing")
+@BlockType(type="AveragingBlock",family = "Preprocessing", runAsJar = true)
 public class AveragingBlock implements Serializable {
 
 	@BlockInput(name = "Markers",type="EEGMarker[]")

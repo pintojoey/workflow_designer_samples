@@ -14,7 +14,7 @@ import static cz.zcu.kiv.WorkflowDesigner.Type.NUMBER;
  * Created by Tomas Prokop on 01.08.2017.
  *  
  */
-@BlockType(type="BaselineCorrection",family="Preprocessing")
+@BlockType(type="BaselineCorrection", family="Preprocessing", runAsJar = true)
 public class BaselineCorrectionBlock implements Serializable {
 
     @BlockProperty(name="StartTime",type = NUMBER, defaultValue = "")

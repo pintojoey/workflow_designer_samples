@@ -19,7 +19,7 @@ import java.io.Serializable;
  * experiments
  * 
  */
-@BlockType(type="EEGMarkerBlock",family = "Preprocessing")
+@BlockType(type="EEGMarkerBlock",family = "Preprocessing", runAsJar = true)
 public class EEGMarkerBlock implements Serializable {
 
     /**

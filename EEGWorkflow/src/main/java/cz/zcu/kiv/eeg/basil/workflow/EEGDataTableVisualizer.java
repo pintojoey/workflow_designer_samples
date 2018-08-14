@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@BlockType(type="EEGDataTable",family = "Visualization")
+@BlockType(type="EEGDataTable",family = "Visualization", runAsJar = true)
 public class EEGDataTableVisualizer implements Serializable {
 
     @BlockInput(name="EEGData",type = "EEGDataList")

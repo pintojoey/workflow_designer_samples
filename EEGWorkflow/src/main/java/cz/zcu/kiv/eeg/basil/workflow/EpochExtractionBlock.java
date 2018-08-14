@@ -9,7 +9,7 @@ import java.util.List;
 
 import static cz.zcu.kiv.WorkflowDesigner.Type.NUMBER;
 
-@BlockType(type="EpochExtraction",family = "Preprocessing")
+@BlockType(type="EpochExtraction",family = "Preprocessing", runAsJar = true)
 public class EpochExtractionBlock implements Serializable {
 
     @BlockProperty(name="PreStimulus onset",type=NUMBER, defaultValue = "0")

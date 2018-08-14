@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import static cz.zcu.kiv.WorkflowDesigner.Type.STRING_ARRAY;
 
-@BlockType(type="ChannelSelection",family = "Preprocessing")
+@BlockType(type="ChannelSelection",family = "Preprocessing", runAsJar = true)
 public class ChannelSelectionBlock implements Serializable {
 
     @BlockProperty(name="channels",type = STRING_ARRAY)

@@ -7,6 +7,8 @@ import cz.zcu.kiv.eegdsp.wavelet.discrete.WaveletResultDiscrete;
 import cz.zcu.kiv.eegdsp.wavelet.discrete.WaveletTransformationDiscrete;
 import cz.zcu.kiv.eegdsp.wavelet.discrete.algorithm.wavelets.WaveletDWT;
 
+import java.io.Serializable;
+
 /**
  * 
  * Features extraction based on discrete wavelet transformation using eegdsp
@@ -15,7 +17,7 @@ import cz.zcu.kiv.eegdsp.wavelet.discrete.algorithm.wavelets.WaveletDWT;
  * @author Jaroslav Klaus
  *
  */
-public class WaveletTransformFeatureExtraction implements IFeatureExtraction {
+public class WaveletTransformFeatureExtraction implements IFeatureExtraction, Serializable {
 
 	/**
 	 * Subsampling factor

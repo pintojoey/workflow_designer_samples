@@ -17,7 +17,7 @@ import java.util.List;
 import static com.sun.org.apache.xalan.internal.xsltc.compiler.Constants.STRING;
 import static cz.zcu.kiv.WorkflowDesigner.Type.NUMBER;
 
-@BlockType(type="NeuralNetworkLayer", family = "classification")
+@BlockType(type="NeuralNetworkLayer", family = "classification", runAsJar = true)
 public class NeuralNetworkLayerChain implements Serializable {
     static Log log=LogFactory.getLog(NeuralNetworkLayerChain.class);
 

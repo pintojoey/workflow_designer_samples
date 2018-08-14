@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@BlockType(type="EEGPlot",family="Visualization")
+@BlockType(type="EEGPlot",family="Visualization", runAsJar = true)
 public class EEGPlotBlock implements Serializable {
 
     @BlockInput(name = "EEGData", type = "EEGDataList")
