@@ -17,7 +17,8 @@ public class FileToString {
     private String stringOutput;
 
     @BlockExecute
-    public void process() throws IOException {
+    public String process() throws IOException {
             stringOutput = FileUtils.readFileToString(fileInput,Charset.defaultCharset());
+            return stringOutput;
     }
 }
