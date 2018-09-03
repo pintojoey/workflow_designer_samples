@@ -1,5 +1,9 @@
 package cz.zcu.kiv.eeg.basil.workflow;
 
+import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockExecute;
+import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockInput;
+import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockOutput;
+import cz.zcu.kiv.WorkflowDesigner.Annotations.BlockType;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessingResult;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessor;
 import cz.zcu.kiv.eegdsp.main.SignalProcessingFactory;
@@ -8,6 +12,9 @@ import cz.zcu.kiv.eegdsp.wavelet.discrete.WaveletTransformationDiscrete;
 import cz.zcu.kiv.eegdsp.wavelet.discrete.algorithm.wavelets.WaveletDWT;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 
@@ -15,9 +22,12 @@ import java.io.Serializable;
  * library
  * 
  * @author Jaroslav Klaus
+ * 
+ * Update @author Lukas Vareka 22. 08. 2018 - transformed into a workflow block
  *
  */
-public class WaveletTransformFeatureExtraction implements IFeatureExtraction, Serializable {
+ @BlockType(type="WaveletTransformBlock", family = "FeatureExtraction", runAsJar = true)
+ public class WaveletTransformFeatureExtraction implements IFeatureExtraction, Serializable {
 
 	/**
 	 * Subsampling factor
@@ -37,6 +47,12 @@ public class WaveletTransformFeatureExtraction implements IFeatureExtraction, Se
 	private int numberOfChannels = 0;
 
 	private ISignalProcessor dwt;
+	
+	@BlockInput(name = "EEGData", type = "EEGDataList")
+	private EEGDataPackageList epochs;
+
+	@BlockOutput(name = "FeatureVectors", type = "List<FeatureVector>")
+	private List<FeatureVector> featureVectors;
 
 	/**
 	 * Constructor for the wavelet transform feature extraction with default
@@ -44,6 +60,7 @@ public class WaveletTransformFeatureExtraction implements IFeatureExtraction, Se
 	 */
 	public WaveletTransformFeatureExtraction() {
 		this.NAME = 8;
+		this.featureVectors = new ArrayList<FeatureVector>();
 		setupDwt();
 	}
 	
@@ -81,6 +98,17 @@ public class WaveletTransformFeatureExtraction implements IFeatureExtraction, Se
 		}
 		((WaveletTransformationDiscrete) dwt).setWavelet(wavelet);
 	}
+	
+	
+	@BlockExecute
+    public void process(){
+		List<EEGDataPackage> inputDataPackages = epochs.getEegDataPackage();
+		for (EEGDataPackage dataPackage: inputDataPackages) {
+			FeatureVector outputVector = extractFeatures(dataPackage);
+			this.featureVectors.add(outputVector);
+		}
+    }
+
 
 	/**
 	 * Method that creates a wavelet by a name using SignalProcessingFactory and
@@ -106,9 +134,9 @@ public class WaveletTransformFeatureExtraction implements IFeatureExtraction, Se
 			}
 			i++;
 		}
-
+		
 		features = SignalProcessing.normalize(features);
-		FeatureVector fv = new FeatureVector(features);
+		FeatureVector fv = new FeatureVector(features, data.getMarkers());
 		return fv;
 	}
 

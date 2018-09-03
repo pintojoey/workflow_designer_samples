@@ -107,59 +107,54 @@ public class NeuralNetworkLayerChain implements Serializable {
     }
 
     private WeightInit parseWeightInit(String command){
-        switch (command){
-            case "xavier" : return WeightInit.XAVIER;
-            case "zero" : return WeightInit.ZERO;
-            case "sigmoid" : return WeightInit.SIGMOID_UNIFORM;
-            case "uniform" : return WeightInit.UNIFORM;
-            case "relu" : return WeightInit.RELU;
-            default: return WeightInit.RELU;
-        }
+    	WeightInit weightInit = null;
+    	try {
+    		weightInit = WeightInit.valueOf(command);
+    	} catch (IllegalArgumentException|NullPointerException e) {
+    		weightInit =  WeightInit.RELU;
+    	}
+        return weightInit;
     }
 
     private Updater parseUpdater(String command){
-        switch (command){
-            case "sgd" : return Updater.SGD;
-            case "adam" : return Updater.ADAM;
-            case "nesterovs" : return Updater.NESTEROVS;
-            case "adagrad" : return Updater.ADAGRAD;
-            case "rmsprop" : return Updater.RMSPROP;
-            default: return Updater.NESTEROVS;
-        }
-    }
+    	Updater updater;
+    	try {
+    		updater = Updater.valueOf(command);
+    	} catch (IllegalArgumentException|NullPointerException e) {
+    		updater = Updater.NESTEROVS;
+    	}
+		return updater;
+	}
 
     private OptimizationAlgorithm parseOptimizationAlgo(String command){
-        switch (command){
-            case "line_gradient_descent" : return OptimizationAlgorithm.LINE_GRADIENT_DESCENT;
-            case "lbfgs" : return OptimizationAlgorithm.LBFGS;
-            case "conjugate_gradient" : return OptimizationAlgorithm.CONJUGATE_GRADIENT;
-            case "stochastic_gradient_descent" : return OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT;
-            default: return OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT;
-        }
+    	OptimizationAlgorithm optimizationAlgorithm = null;
+    	try {
+    		optimizationAlgorithm = OptimizationAlgorithm.valueOf(command.toUpperCase());
+    	} catch (IllegalArgumentException|NullPointerException e) {
+    		optimizationAlgorithm = OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT; // default
+    	}
+    	return optimizationAlgorithm;
     }
 
     public static LossFunctions.LossFunction parseLossFunction(String command){
-        switch (command){
-            case "mse" : return LossFunctions.LossFunction.MSE;
-            case "xent" : return LossFunctions.LossFunction.XENT;
-            case "squared_loss" : return LossFunctions.LossFunction.SQUARED_LOSS;
-            case "negativeloglikelihood" : return LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD;
-            default: return LossFunctions.LossFunction.MSE;
-        }
+    	LossFunctions.LossFunction lossFunction;
+    	try {
+    		lossFunction = LossFunctions.LossFunction.valueOf(command.toUpperCase());
+    	} catch (IllegalArgumentException|NullPointerException e) {
+    		lossFunction = LossFunctions.LossFunction.MSE; // default
+    	}
+       return lossFunction;
     }
 
 
     public static Activation parseActivation(String command){
-        switch (command){
-            case "sigmoid" : return Activation.SIGMOID;
-            case "softmax" : return Activation.SOFTMAX;
-            case "relu" : return Activation.RELU;
-            case "tanh" : return Activation.TANH;
-            case "identity" : return Activation.IDENTITY;
-            case "softplus" : return Activation.SOFTPLUS;
-            case "elu" : return Activation.ELU;
-            default: return Activation.SIGMOID;
-        }
+    	Activation activation  = null;
+    	try {
+    		activation = Activation.valueOf(command.toUpperCase());
+    	} catch (IllegalArgumentException|NullPointerException e) {
+    		activation = Activation.SIGMOID; // default
+    	}
+    	return activation;
     }
 
     public List<Layer> getLayerArraylist() {

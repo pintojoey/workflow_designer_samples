@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cz.zcu.kiv.eeg.basil</groupId>
-	<artifactId>basil_bci</artifactId>
+	<artifactId>basil_bci_v2</artifactId>
 	<packaging>jar</packaging>
 	<version>0.1.0</version>
 
@@ -17,11 +17,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<shadedClassifier>bin</shadedClassifier>
 		<java.version>1.8</java.version>
-		<nd4j.version>1.0.0-beta</nd4j.version>
-		<dl4j.version>1.0.0-beta</dl4j.version>
-		<datavec.version>1.0.0-SNAPSHOT</datavec.version>
-		<arbiter.version>1.0.0-SNAPSHOT</arbiter.version>
-		<rl4j.version>1.0.0-SNAPSHOT</rl4j.version>
+		<nd4j.version>1.0.0-alpha</nd4j.version>
+		<dl4j.version>1.0.0-alpha</dl4j.version>
+		<datavec.version>1.0.0-alpha</datavec.version>
+		<arbiter.version>1.0.0-alpha</arbiter.version>
+		<rl4j.version>1.0.0-alpha</rl4j.version>
 		<guava.version>19.0</guava.version>
 		<logback.version>1.1.7</logback.version>
 		<jfreechart.version>1.0.13</jfreechart.version>

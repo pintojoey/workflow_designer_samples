@@ -22,11 +22,11 @@ public class NeuralNetClassifierBlock implements Serializable {
 	@BlockInput(name = "Markers",type="EEGMarker[]")
 	private List<EEGMarker> markers;
 
-	@BlockInput(name = "TrainingEEGData", type = "EEGDataList")
-	private EEGDataPackageList trainingEEGData;
+	@BlockInput(name = "TrainingFeatureVectors", type = "List<FeatureVector>")
+	private List<FeatureVector> trainingEEGData;
 
-    @BlockInput(name = "TestingEEGData", type = "EEGDataList")
-    private EEGDataPackageList testingEEGData;
+	@BlockInput(name = "TestingFeatureVectors", type = "List<FeatureVector>")
+    private List<FeatureVector> testingEEGData;
 
     @BlockInput(name="Layers", type="NeuralNetworkLayerChain")
     private NeuralNetworkLayerChain layerChain;
@@ -37,47 +37,21 @@ public class NeuralNetClassifierBlock implements Serializable {
 
 	@BlockExecute
     public Object process(){
-		ITrainCondition trainCondition = new ErpTrainCondition();
-		for (EEGDataPackage dataPackage : trainingEEGData.getEegDataPackage()) {
-
-			String marker;
-			if(dataPackage.getMarkers() == null || dataPackage.getMarkers().get(0) == null)
-				continue;
-			marker = dataPackage.getMarkers().get(0).getName();
-
-			FeatureVector fv = new FeatureVector();
-			WaveletTransformFeatureExtraction dwt = new WaveletTransformFeatureExtraction();
-			FeatureVector features = dwt.extractFeatures(dataPackage);
-			fv.addFeatures(features);
-
-			//markers contains S 2 and S4
-            for( EEGMarker markerBlock:markers) {
-                trainCondition.addSample(fv, markerBlock.getName(), marker);
-            }
-
-		}
 		SDADeepLearning4jClassifier classification = new SDADeepLearning4jClassifier(layerChain.layerArraylist);
-        Evaluation eval = classification.train(trainCondition.getFeatureVectors(), 10);
-        if(testingEEGData!=null){
-            List<FeatureVector> testingVectors=new ArrayList<>();
-            List<Double>testingTargets=new ArrayList<>();
-            for (EEGDataPackage dataPackage : testingEEGData.getEegDataPackage()) {
-
-                FeatureVector fv = new FeatureVector();
-                WaveletTransformFeatureExtraction dwt = new WaveletTransformFeatureExtraction();
-                FeatureVector features = dwt.extractFeatures(dataPackage);
-                fv.addFeatures(features);
-
-                testingVectors.add(fv);
-                testingTargets.add(fv.getExpectedOutput()); //What to add here?
-            }
-            ClassificationStatistics statistics = classification.test(testingVectors, testingTargets);
+        Evaluation eval = classification.train(trainingEEGData, 10);
+        if(testingEEGData != null) {
+        	// collect expected labels
+        	List<Double> expectedLabels = new ArrayList<Double>();
+        	for (FeatureVector featureVector: testingEEGData) {
+        		expectedLabels.add(featureVector.getExpectedOutput());
+        	}
+            ClassificationStatistics statistics = classification.test(testingEEGData, expectedLabels);
             return statistics.toString();
 
         }
 
         Table table = new Table();
-        List<List<String>>rows=new ArrayList<>();
+        List<List<String>> rows = new ArrayList<>();
         rows.add(Arrays.asList("Precision",String.valueOf(eval.precision())));
         rows.add(Arrays.asList("Recall",String.valueOf(eval.recall())));
         rows.add(Arrays.asList("Accuracy",String.valueOf(eval.accuracy())));
@@ -103,11 +77,11 @@ public class NeuralNetClassifierBlock implements Serializable {
         this.markers = markers;
     }
 
-    public EEGDataPackageList getTrainingEEGData() {
+    public List<FeatureVector> getTrainingEEGData() {
         return trainingEEGData;
     }
 
-    public void setTrainingEEGData(EEGDataPackageList trainingEEGData) {
+    public void setTrainingEEGData(List<FeatureVector> trainingEEGData) {
         this.trainingEEGData = trainingEEGData;
     }
 

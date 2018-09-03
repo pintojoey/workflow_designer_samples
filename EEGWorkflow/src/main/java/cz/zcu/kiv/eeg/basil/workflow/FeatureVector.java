@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eeg.basil.workflow;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Represents a feature vector as
@@ -11,6 +12,7 @@ import java.io.Serializable;
 public class FeatureVector implements Serializable {
     private double[][] featureVector;
     private double expectedOutput;
+    private List<EEGMarker> markers;	
 
     public FeatureVector() {
         this.featureVector = null;
@@ -39,7 +41,12 @@ public class FeatureVector implements Serializable {
         this.expectedOutput = expectedOutput;
     }
 
-    /**
+    public FeatureVector(double[] features, List<EEGMarker> markers) {
+		this(features);
+		this.markers = markers;
+	}
+
+	/**
      * Join two feature vectors
      *
      * @param features feature vector
@@ -131,4 +138,8 @@ public class FeatureVector implements Serializable {
     public void setExpectedOutput(double expectedOutput) {
         this.expectedOutput = expectedOutput;
     }
+
+	public List<EEGMarker> getMarkers() {
+		return markers;
+	}
 }
